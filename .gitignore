@@ -1,0 +1,28 @@
+# Build outputs
+[Ee]agleStaticSiteTool/bin/
+[Ee]agleStaticSiteTool/obj/
+**/bin/
+**/obj/
+
+# Generated static site (built locally and by GitHub Actions)
+[Ee]agleSiteOutput/
+
+# Publish folders
+**/publish/
+
+# Visual Studio / Rider / VS Code
+.vs/
+.idea/
+*.user
+*.userosscache
+*.sln.docstates
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Logs / temp
+*.log
+*.tmp
+*.temp

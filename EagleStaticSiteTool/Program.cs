@@ -116,10 +116,12 @@ for (int i = 0; i < libraries.Count; i++)
             Tags = imageMeta.Tags ?? [],
             FolderIds = (imageMeta.Folders ?? []).Select(fid =>
                 folderIdMap.TryGetValue(fid, out string? mapped) ? mapped : $"{libraryId}:{fid}").ToList(),
+            FolderPath = string.Empty,
             ModificationTime = imageMeta.ModificationTime,
             Btime = imageMeta.Btime,
             Mtime = imageMeta.Mtime,
             LastModified = imageMeta.LastModified,
+            SearchTokens = string.Empty,
             ImagePath = relativeAssetPath
         });
         publishedCountForLibrary++;
@@ -139,6 +141,21 @@ imageItems = imageItems
     .ThenBy(i => i.Name, StringComparer.OrdinalIgnoreCase)
     .ToList();
 
+var folderLookup = flatFolders.ToDictionary(f => f.Id, StringComparer.OrdinalIgnoreCase);
+foreach (ImageItemDto image in imageItems)
+{
+    image.FolderPath = BuildPrimaryFolderPath(image.FolderIds, folderLookup);
+    image.SearchTokens = BuildSearchTokens(image);
+}
+
+List<string> allTags = imageItems
+    .SelectMany(i => i.Tags)
+    .Where(t => !string.IsNullOrWhiteSpace(t))
+    .Select(t => t.Trim())
+    .Distinct(StringComparer.OrdinalIgnoreCase)
+    .OrderBy(t => t, StringComparer.OrdinalIgnoreCase)
+    .ToList();
+
 var siteData = new SiteDataDto
 {
     SiteName = "Eagle Multi Library",
@@ -146,6 +163,7 @@ var siteData = new SiteDataDto
     PublishTag = publishTag,
     Libraries = librariesData,
     Folders = flatFolders,
+    AllTags = allTags,
     Images = imageItems
 };
 
@@ -246,6 +264,44 @@ static string? FindSourceImage(string infoDir, ImageMetadata imageMeta)
     return files.FirstOrDefault(f => !ignored.Contains(Path.GetFileName(f)));
 }
 
+static string BuildPrimaryFolderPath(IEnumerable<string> folderIds, Dictionary<string, FolderDto> folderLookup)
+{
+    foreach (string folderId in folderIds)
+    {
+        if (!folderLookup.TryGetValue(folderId, out FolderDto? folder))
+        {
+            continue;
+        }
+
+        var stack = new Stack<string>();
+        FolderDto? current = folder;
+        while (current is not null)
+        {
+            stack.Push(current.Name);
+            current = current.ParentId is not null && folderLookup.TryGetValue(current.ParentId, out FolderDto? parent)
+                ? parent
+                : null;
+        }
+        return string.Join(" / ", stack);
+    }
+
+    return string.Empty;
+}
+
+static string BuildSearchTokens(ImageItemDto image)
+{
+    var parts = new List<string>
+    {
+        image.Name,
+        image.LibraryName,
+        image.FolderPath,
+        image.Annotation,
+        image.Url
+    };
+    parts.AddRange(image.Tags);
+    return string.Join(" ", parts.Where(p => !string.IsNullOrWhiteSpace(p))).ToLowerInvariant();
+}
+
 const string HtmlTemplate = """
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -267,8 +323,19 @@ const string HtmlTemplate = """
     <main class="center-panel">
       <header class="toolbar">
         <button id="openFolderPanel" class="mobile-action" type="button">分类</button>
-        <div class="toolbar-title" id="toolbarTitle">全部图片</div>
-        <input id="searchInput" class="search" type="text" placeholder="搜索文件名..." />
+        <div class="toolbar-main">
+          <div class="toolbar-title" id="toolbarTitle">全部图片</div>
+          <div class="toolbar-filters">
+            <input id="searchInput" class="search" type="text" placeholder="搜索文件名、标签..." />
+            <select id="sortSelect" class="control-select">
+              <option value="latest">最新发布</option>
+              <option value="modified">最近修改</option>
+              <option value="name">名称 A-Z</option>
+            </select>
+            <button id="clearFilters" class="control-button" type="button">清空筛选</button>
+          </div>
+          <div id="tagFilters" class="tag-filters"></div>
+        </div>
       </header>
       <section id="galleryGrid" class="gallery-grid"></section>
     </main>
@@ -279,6 +346,8 @@ const string HtmlTemplate = """
       <div class="field"><label>文件名</label><input id="detailName" readonly /></div>
       <div class="field"><label>链接</label><input id="detailUrl" readonly /></div>
       <div class="field"><label>标签</label><input id="detailTags" readonly /></div>
+      <div class="field"><label>所属库</label><input id="detailLibrary" readonly /></div>
+      <div class="field"><label>所属目录</label><input id="detailFolderPath" readonly /></div>
       <div class="field"><label>备注</label><textarea id="detailAnnotation" readonly></textarea></div>
       <div class="meta-block">
         <div><span>尺寸</span><strong id="detailSize">-</strong></div>
@@ -358,21 +427,47 @@ body {
 .tree-subitem.all { font-weight: 600; color: var(--text); }
 .center-panel { display: flex; flex-direction: column; min-width: 0; }
 .toolbar {
-  height: 56px;
   border-bottom: 1px solid var(--border);
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 16px;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 16px;
   background: var(--panel);
 }
+.toolbar-main { flex: 1; min-width: 0; }
+.toolbar-title { font-weight: 600; margin-bottom: 8px; }
+.toolbar-filters { display: flex; gap: 8px; align-items: center; }
 .search {
-  width: 260px;
+  flex: 1;
+  min-width: 180px;
   background: var(--panel-soft);
   border: 1px solid var(--border);
   border-radius: 8px;
   color: var(--text);
   padding: 8px 10px;
+}
+.control-select,.control-button {
+  background: var(--panel-soft);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  padding: 8px 10px;
+}
+.control-button { cursor: pointer; }
+.tag-filters { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px; }
+.tag-chip {
+  border: 1px solid var(--border);
+  background: #252b34;
+  color: var(--muted);
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 12px;
+  cursor: pointer;
+}
+.tag-chip.is-active {
+  color: var(--text);
+  border-color: var(--accent);
+  background: rgba(78, 142, 247, 0.15);
 }
 .gallery-grid {
   padding: 16px;
@@ -479,21 +574,32 @@ h2 { margin: 0 0 12px; font-size: 16px; }
   .mobile-action,.mobile-close { display: inline-block; }
   .mobile-close { margin: 0 12px 8px; width: calc(100% - 24px); }
   .toolbar { gap: 10px; height: auto; padding: 10px 12px; flex-wrap: wrap; }
-  .search { width: 100%; }
+  .toolbar-filters { width: 100%; flex-wrap: wrap; }
+  .search { min-width: 120px; width: 100%; }
+  .control-select { flex: 1; min-width: 120px; }
+  .control-button { white-space: nowrap; }
   .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); padding: 12px; gap: 10px; }
 }
 """;
 
 const string JsTemplate = """
 let siteData = null;
-let selectedLibraryId = null;
-let selectedFolderId = null;
 let selectedImageId = null;
 const collapsedLibraryIds = new Set();
+const filterState = {
+  libraryId: null,
+  folderId: null,
+  keyword: "",
+  sortBy: "latest",
+  selectedTags: new Set()
+};
 
 const folderTree = document.getElementById("folderTree");
 const galleryGrid = document.getElementById("galleryGrid");
 const searchInput = document.getElementById("searchInput");
+const sortSelect = document.getElementById("sortSelect");
+const tagFilters = document.getElementById("tagFilters");
+const clearFilters = document.getElementById("clearFilters");
 const toolbarTitle = document.getElementById("toolbarTitle");
 const libraryName = document.getElementById("libraryName");
 const leftPanel = document.getElementById("leftPanel");
@@ -504,6 +610,8 @@ const preview = document.getElementById("preview");
 const detailName = document.getElementById("detailName");
 const detailUrl = document.getElementById("detailUrl");
 const detailTags = document.getElementById("detailTags");
+const detailLibrary = document.getElementById("detailLibrary");
+const detailFolderPath = document.getElementById("detailFolderPath");
 const detailAnnotation = document.getElementById("detailAnnotation");
 const detailSize = document.getElementById("detailSize");
 const detailExt = document.getElementById("detailExt");
@@ -526,21 +634,21 @@ function main() {
   siteData.folders = siteData.folders || siteData.Folders || [];
   siteData.images = siteData.images || siteData.Images || [];
   siteData.libraries = siteData.libraries || siteData.Libraries || [];
+  siteData.allTags = siteData.allTags || siteData.AllTags || [];
   libraryName.textContent = siteData.siteName || "Eagle Multi Library";
   renderFolders();
+  renderTagFilters();
   renderGallery();
 }
 
 function renderFolders() {
   folderTree.innerHTML = "";
-
   const allBtn = createFolderButton({ id: "", name: "全部图片" }, true);
   folderTree.appendChild(allBtn);
 
   for (const lib of siteData.libraries) {
     const group = document.createElement("section");
     group.className = "tree-library-group";
-
     const header = document.createElement("button");
     header.className = "tree-library-header";
     const collapsed = collapsedLibraryIds.has(lib.id);
@@ -555,20 +663,11 @@ function renderFolders() {
     if (!collapsed) {
       const content = document.createElement("div");
       content.className = "tree-library-content";
-
       const allInLib = document.createElement("button");
       allInLib.className = "tree-subitem all";
       allInLib.textContent = "该库全部图片";
-      if (selectedLibraryId === lib.id && !selectedFolderId) {
-        allInLib.classList.add("is-active");
-      }
-      allInLib.onclick = () => {
-        selectedLibraryId = lib.id;
-        selectedFolderId = null;
-        selectedImageId = null;
-        renderFolders();
-        renderGallery();
-      };
+      if (filterState.libraryId === lib.id && !filterState.folderId) allInLib.classList.add("is-active");
+      allInLib.onclick = () => updateFilter({ libraryId: lib.id, folderId: null, resetSelectedImage: true, closePanel: true });
       content.appendChild(allInLib);
 
       const folders = siteData.folders.filter(f => f.libraryId === lib.id);
@@ -580,7 +679,6 @@ function renderFolders() {
       }
       group.appendChild(content);
     }
-
     folderTree.appendChild(group);
   }
 }
@@ -589,36 +687,71 @@ function createFolderButton(folder, resetLibrary) {
   const btn = document.createElement("button");
   btn.className = "tree-item";
   btn.textContent = folder.name;
-  if (resetLibrary && !selectedLibraryId && !selectedFolderId) {
-    btn.classList.add("is-active");
-  } else if (!resetLibrary && (selectedFolderId || "") === (folder.id || "")) {
-    btn.classList.add("is-active");
-  }
-  btn.onclick = () => {
-    selectedLibraryId = resetLibrary ? null : (folder.libraryId || null);
-    selectedFolderId = resetLibrary ? null : (folder.id || null);
-    selectedImageId = null;
-    renderFolders();
-    renderGallery();
-    if (window.innerWidth <= 900) {
-      leftPanel.classList.remove("is-open");
-    }
-  };
+  if (resetLibrary && !filterState.libraryId && !filterState.folderId) btn.classList.add("is-active");
+  if (!resetLibrary && (filterState.folderId || "") === (folder.id || "")) btn.classList.add("is-active");
+  btn.onclick = () => updateFilter({
+    libraryId: resetLibrary ? null : (folder.libraryId || null),
+    folderId: resetLibrary ? null : (folder.id || null),
+    resetSelectedImage: true,
+    closePanel: true
+  });
   return btn;
 }
 
-function renderGallery() {
-  const search = (searchInput.value || "").trim().toLowerCase();
-  const images = siteData.images.filter(img => {
-    const inLibrary = !selectedLibraryId || img.libraryId === selectedLibraryId;
-    const inFolder = !selectedFolderId || (img.folderIds || []).includes(selectedFolderId);
-    const inSearch = !search || (img.name || "").toLowerCase().includes(search);
-    return inLibrary && inFolder && inSearch;
+function renderTagFilters() {
+  tagFilters.innerHTML = "";
+  for (const tag of siteData.allTags) {
+    const chip = document.createElement("button");
+    chip.className = "tag-chip";
+    if (filterState.selectedTags.has(tag)) chip.classList.add("is-active");
+    chip.textContent = tag;
+    chip.onclick = () => {
+      if (filterState.selectedTags.has(tag)) filterState.selectedTags.delete(tag);
+      else filterState.selectedTags.add(tag);
+      updateFilter({ resetSelectedImage: true });
+    };
+    tagFilters.appendChild(chip);
+  }
+}
+
+function updateFilter(opts = {}) {
+  if ("libraryId" in opts) filterState.libraryId = opts.libraryId;
+  if ("folderId" in opts) filterState.folderId = opts.folderId;
+  if ("keyword" in opts) filterState.keyword = opts.keyword;
+  if ("sortBy" in opts) filterState.sortBy = opts.sortBy;
+  if (opts.resetSelectedImage) selectedImageId = null;
+  renderFolders();
+  renderTagFilters();
+  renderGallery();
+  if (opts.closePanel && window.innerWidth <= 900) leftPanel.classList.remove("is-open");
+}
+
+function getFilteredImages() {
+  const keyword = (filterState.keyword || "").trim().toLowerCase();
+  const selectedTags = [...filterState.selectedTags];
+  const filtered = siteData.images.filter(img => {
+    const inLibrary = !filterState.libraryId || img.libraryId === filterState.libraryId;
+    const inFolder = !filterState.folderId || (img.folderIds || []).includes(filterState.folderId);
+    const inSearch = !keyword || (img.searchTokens || "").includes(keyword);
+    const inTags = selectedTags.length === 0 || selectedTags.every(tag => (img.tags || []).includes(tag));
+    return inLibrary && inFolder && inSearch && inTags;
   });
 
-  const title = selectedFolderId
-    ? (siteData.folders.find(f => f.id === selectedFolderId)?.name || "分类")
-    : (selectedLibraryId ? (siteData.libraries.find(l => l.id === selectedLibraryId)?.name || "图库") : "全部图片");
+  if (filterState.sortBy === "name") {
+    filtered.sort((a, b) => (a.name || "").localeCompare(b.name || ""));
+  } else if (filterState.sortBy === "modified") {
+    filtered.sort((a, b) => (b.lastModified || b.mtime || 0) - (a.lastModified || a.mtime || 0));
+  } else {
+    filtered.sort((a, b) => (b.modificationTime || 0) - (a.modificationTime || 0));
+  }
+  return filtered;
+}
+
+function renderGallery() {
+  const images = getFilteredImages();
+  const title = filterState.folderId
+    ? (siteData.folders.find(f => f.id === filterState.folderId)?.name || "分类")
+    : (filterState.libraryId ? (siteData.libraries.find(l => l.id === filterState.libraryId)?.name || "图库") : "全部图片");
   toolbarTitle.textContent = `${title} (${images.length})`;
 
   galleryGrid.innerHTML = "";
@@ -628,28 +761,19 @@ function renderGallery() {
     return;
   }
 
-  if (!selectedImageId || !images.some(x => x.id === selectedImageId)) {
-    selectedImageId = images[0].id;
-  }
-
+  if (!selectedImageId || !images.some(x => x.id === selectedImageId)) selectedImageId = images[0].id;
   for (const image of images) {
     const card = document.createElement("article");
     card.className = "asset-card";
-    if (image.id === selectedImageId) {
-      card.classList.add("is-selected");
-    }
-
+    if (image.id === selectedImageId) card.classList.add("is-selected");
     const thumb = image.imagePath
       ? `<img class="thumb" src="${image.imagePath}" alt="${escapeHtml(image.name)}" />`
       : `<div class="thumb" style="display:flex;align-items:center;justify-content:center;color:#9aa0aa;">无源图</div>`;
-
     card.innerHTML = `${thumb}<div class="asset-name">${escapeHtml(image.name || image.id)}</div>`;
     const thumbEl = card.querySelector(".thumb");
     thumbEl?.addEventListener("click", (e) => {
       e.stopPropagation();
-      if (image.imagePath) {
-        openLightbox(image.imagePath, image.name || image.id);
-      }
+      if (image.imagePath) openLightbox(image.imagePath, image.name || image.id);
     });
     card.onclick = () => {
       selectedImageId = image.id;
@@ -657,7 +781,6 @@ function renderGallery() {
     };
     galleryGrid.appendChild(card);
   }
-
   renderDetail(images.find(x => x.id === selectedImageId) || null);
 }
 
@@ -667,6 +790,8 @@ function renderDetail(image) {
     detailName.value = "";
     detailUrl.value = "";
     detailTags.value = "";
+    detailLibrary.value = "";
+    detailFolderPath.value = "";
     detailAnnotation.value = "";
     detailSize.textContent = "-";
     detailExt.textContent = "-";
@@ -676,13 +801,12 @@ function renderDetail(image) {
     detailModifyTime.textContent = "-";
     return;
   }
-
-  preview.innerHTML = image.imagePath
-    ? `<img src="${image.imagePath}" alt="${escapeHtml(image.name)}" />`
-    : "无源图";
+  preview.innerHTML = image.imagePath ? `<img src="${image.imagePath}" alt="${escapeHtml(image.name)}" />` : "无源图";
   detailName.value = image.name || "";
   detailUrl.value = image.url || "";
-  detailTags.value = [image.libraryName, ...(image.tags || [])].filter(Boolean).join(", ");
+  detailTags.value = (image.tags || []).join(", ");
+  detailLibrary.value = image.libraryName || "";
+  detailFolderPath.value = image.folderPath || "";
   detailAnnotation.value = image.annotation || "";
   detailSize.textContent = `${image.width || 0} x ${image.height || 0}`;
   detailExt.textContent = (image.ext || "").toUpperCase();
@@ -690,11 +814,8 @@ function renderDetail(image) {
   detailAddTime.textContent = formatMsTime(image.modificationTime);
   detailCreateTime.textContent = formatMsTime(image.btime);
   detailModifyTime.textContent = formatMsTime(image.lastModified || image.mtime);
-
   preview.onclick = () => {
-    if (image.imagePath) {
-      openLightbox(image.imagePath, image.name || image.id);
-    }
+    if (image.imagePath) openLightbox(image.imagePath, image.name || image.id);
   };
   preview.style.cursor = image.imagePath ? "zoom-in" : "default";
 }
@@ -726,18 +847,23 @@ function escapeHtml(text) {
     .replaceAll("'", "&#39;");
 }
 
-searchInput.addEventListener("input", () => {
+searchInput.addEventListener("input", () => updateFilter({ keyword: searchInput.value, resetSelectedImage: true }));
+sortSelect.addEventListener("change", () => updateFilter({ sortBy: sortSelect.value, resetSelectedImage: true }));
+clearFilters.addEventListener("click", () => {
+  filterState.libraryId = null;
+  filterState.folderId = null;
+  filterState.keyword = "";
+  filterState.sortBy = "latest";
+  filterState.selectedTags.clear();
+  searchInput.value = "";
+  sortSelect.value = "latest";
   selectedImageId = null;
+  renderFolders();
+  renderTagFilters();
   renderGallery();
 });
-
-openFolderPanel?.addEventListener("click", () => {
-  leftPanel.classList.add("is-open");
-});
-
-closeFolderPanel?.addEventListener("click", () => {
-  leftPanel.classList.remove("is-open");
-});
+openFolderPanel?.addEventListener("click", () => leftPanel.classList.add("is-open"));
+closeFolderPanel?.addEventListener("click", () => leftPanel.classList.remove("is-open"));
 
 function openLightbox(src, alt) {
   lightboxImage.src = src;
@@ -745,24 +871,17 @@ function openLightbox(src, alt) {
   lightbox.classList.add("is-open");
   lightbox.setAttribute("aria-hidden", "false");
 }
-
 function closeLightbox() {
   lightbox.classList.remove("is-open");
   lightbox.setAttribute("aria-hidden", "true");
   lightboxImage.src = "";
 }
-
 lightboxClose?.addEventListener("click", closeLightbox);
 lightbox?.addEventListener("click", (e) => {
-  if (e.target === lightbox) {
-    closeLightbox();
-  }
+  if (e.target === lightbox) closeLightbox();
 });
-
 window.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && lightbox?.classList.contains("is-open")) {
-    closeLightbox();
-  }
+  if (e.key === "Escape" && lightbox?.classList.contains("is-open")) closeLightbox();
 });
 """;
 
@@ -848,6 +967,7 @@ public sealed class SiteDataDto
     public string PublishTag { get; set; } = string.Empty;
     public List<LibraryDto> Libraries { get; set; } = [];
     public List<FolderDto> Folders { get; set; } = [];
+    public List<string> AllTags { get; set; } = [];
     public List<ImageItemDto> Images { get; set; } = [];
 }
 
@@ -884,9 +1004,11 @@ public sealed class ImageItemDto
     public string Annotation { get; set; } = string.Empty;
     public List<string> Tags { get; set; } = [];
     public List<string> FolderIds { get; set; } = [];
+    public string FolderPath { get; set; } = string.Empty;
     public long ModificationTime { get; set; }
     public long Btime { get; set; }
     public long Mtime { get; set; }
     public long LastModified { get; set; }
+    public string SearchTokens { get; set; } = string.Empty;
     public string? ImagePath { get; set; }
 }
