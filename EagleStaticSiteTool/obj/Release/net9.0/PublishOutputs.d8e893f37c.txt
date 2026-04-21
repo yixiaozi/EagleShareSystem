@@ -1,0 +1,5 @@
+E:\Develop\EagleShareSystem\EagleStaticSiteTool\bin\Release\net9.0\publish\EagleStaticSiteTool.exe
+E:\Develop\EagleShareSystem\EagleStaticSiteTool\bin\Release\net9.0\publish\EagleStaticSiteTool.dll
+E:\Develop\EagleShareSystem\EagleStaticSiteTool\bin\Release\net9.0\publish\EagleStaticSiteTool.deps.json
+E:\Develop\EagleShareSystem\EagleStaticSiteTool\bin\Release\net9.0\publish\EagleStaticSiteTool.runtimeconfig.json
+E:\Develop\EagleShareSystem\EagleStaticSiteTool\bin\Release\net9.0\publish\EagleStaticSiteTool.pdb

@@ -1,0 +1,14 @@
+E:\Develop\EagleShareSystem\EagleStaticSiteTool\obj\Debug\net9.0\EagleStaticSiteTool.GeneratedMSBuildEditorConfig.editorconfig
+E:\Develop\EagleShareSystem\EagleStaticSiteTool\obj\Debug\net9.0\EagleStaticSiteTool.AssemblyInfoInputs.cache
+E:\Develop\EagleShareSystem\EagleStaticSiteTool\obj\Debug\net9.0\EagleStaticSiteTool.AssemblyInfo.cs
+E:\Develop\EagleShareSystem\EagleStaticSiteTool\obj\Debug\net9.0\EagleStaticSiteTool.csproj.CoreCompileInputs.cache
+E:\Develop\EagleShareSystem\EagleStaticSiteTool\bin\Debug\net9.0\EagleStaticSiteTool.exe
+E:\Develop\EagleShareSystem\EagleStaticSiteTool\bin\Debug\net9.0\EagleStaticSiteTool.deps.json
+E:\Develop\EagleShareSystem\EagleStaticSiteTool\bin\Debug\net9.0\EagleStaticSiteTool.runtimeconfig.json
+E:\Develop\EagleShareSystem\EagleStaticSiteTool\bin\Debug\net9.0\EagleStaticSiteTool.dll
+E:\Develop\EagleShareSystem\EagleStaticSiteTool\bin\Debug\net9.0\EagleStaticSiteTool.pdb
+E:\Develop\EagleShareSystem\EagleStaticSiteTool\obj\Debug\net9.0\EagleStaticSiteTool.dll
+E:\Develop\EagleShareSystem\EagleStaticSiteTool\obj\Debug\net9.0\refint\EagleStaticSiteTool.dll
+E:\Develop\EagleShareSystem\EagleStaticSiteTool\obj\Debug\net9.0\EagleStaticSiteTool.pdb
+E:\Develop\EagleShareSystem\EagleStaticSiteTool\obj\Debug\net9.0\EagleStaticSiteTool.genruntimeconfig.cache
+E:\Develop\EagleShareSystem\EagleStaticSiteTool\obj\Debug\net9.0\ref\EagleStaticSiteTool.dll
