@@ -27,8 +27,8 @@ jobs:
         with:
           dotnet-version: "9.0.x"
 
-      - name: Generate static site
-        run: dotnet run --project ./EagleStaticSiteTool -- ./EagleDemo.library ./EagleSiteOutput 发布
+      - name: Generate static site from all demo libraries
+        run: dotnet run --project ./EagleStaticSiteTool -- . ./EagleSiteOutput 发布
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
