@@ -1,5 +1,5 @@
 {
-  "Cursor": "AAY1ZaIPIHGk7VXhopXWRj95A8AjmO5i7NQUfn7dNKN-VsctawlRubmEYCsJ_RZUwrs6b0sh22jPmaty0myGkRU84aHvi8GrF-rDo6aXL4_WKIRNDbNldOa7AuDvN731L9Zzugbi9mN1xJubthpW2f01E314fGf8jdlWJK7j37ueP1sUmokGB9ePVuJp08o6mCpHo2XBwPcjFDST7OfN0FBw",
+  "Cursor": "AAZ-lj0Lgeqyay9Zey1KPhl8jW-ix2Ep4CeG_NQlJpPen6PBU2C7Hhffx2BNtQEPU4V1PbpEeZRcfo8JISL1ZrkMJ4KToKVIekMIB8T7JZUrQVyZ9IlZsNJVgAeUqOrGWiaWYHFINHVNRmbQKZ18w373eFWkyp264jcUCg3YFm4gmTG9iSuI7mhGszC3OrkPcie5yM58KB1uwYY8TMqfZVmp",
   "RootPath": "/Eagle",
   "Since": "2026-09-01T00:00:00.0000000\u002B08:00",
   "BootstrapCompleted": true,
@@ -20,11 +20,11 @@
       "ImageId": "JOBU43QLS1MHE",
       "MetadataPath": "/Eagle/EagleDemo.library/images/JOBU43QLS1MHE.info/metadata.json",
       "InfoDirPath": "/Eagle/EagleDemo.library/images/JOBU43QLS1MHE.info",
-      "SourceImagePath": "/Eagle/EagleDemo.library/images/JOBU43QLS1MHE.info/e86.jpg",
+      "SourceImagePath": "/Eagle/EagleDemo.library/images/JOBU43QLS1MHE.info/我很喜欢的向日葵.jpg",
       "AssetFileName": "lib-bb02c06eef_JOBU43QLS1MHE.jpg",
       "Metadata": {
         "id": "JOBU43QLS1MHE",
-        "name": "e86",
+        "name": "我很喜欢的向日葵",
         "ext": "jpg",
         "size": 7517916,
         "width": 5184,
@@ -38,9 +38,9 @@
         "url": "",
         "annotation": "",
         "modificationTime": 1776788489451,
-        "btime": 0,
-        "mtime": 0,
-        "lastModified": 1788436204008
+        "btime": 1788435003408,
+        "mtime": 1788431210372,
+        "lastModified": 1788437429248
       }
     }
   }
