@@ -61,6 +61,9 @@ public sealed class ImageMetadata
 
     [JsonPropertyName("lastModified")]
     public long LastModified { get; set; }
+
+    [JsonPropertyName("isDeleted")]
+    public bool IsDeleted { get; set; }
 }
 
 public sealed class SiteDataDto

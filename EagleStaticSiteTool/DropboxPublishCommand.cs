@@ -133,25 +133,43 @@ public static class DropboxPublishCommand
                 hasMore = more;
                 foreach (var entry in entries)
                 {
-                    var info = ParseEaglePath(rootPath, entry.PathDisplay);
-                    if (info is null)
+                    if (entry.IsDeleted)
                     {
+                        // Keep raw deleted paths even when they are .info folders / image files,
+                        // so RemoveByDeletedDropboxPath can unpublish matching state entries.
+                        deletedPaths.Add(entry.PathDisplay);
+
+                        var deletedInfo = ParseEaglePath(rootPath, entry.PathDisplay);
+                        if (deletedInfo is not null)
+                        {
+                            touchedLibraryPaths.Add(deletedInfo.LibraryPath);
+                            if (deletedInfo.IsImageMetadata)
+                            {
+                                touchedImageMetaPaths.Add(entry.PathDisplay);
+                            }
+                        }
+                        else
+                        {
+                            // e.g. /Eagle/Lib.library/images/XXX.info or a file inside it
+                            string p = entry.PathDisplay.Replace('\\', '/');
+                            foreach (SyncImageState img in state.Images.Values)
+                            {
+                                string infoDir = img.InfoDirPath.TrimEnd('/');
+                                if (string.Equals(p.TrimEnd('/'), infoDir, StringComparison.OrdinalIgnoreCase) ||
+                                    p.StartsWith(infoDir + "/", StringComparison.OrdinalIgnoreCase))
+                                {
+                                    touchedLibraryPaths.Add(img.LibraryPath);
+                                    touchedImageMetaPaths.Add(img.MetadataPath);
+                                }
+                            }
+                        }
+
                         continue;
                     }
 
-                    if (entry.IsDeleted)
+                    var info = ParseEaglePath(rootPath, entry.PathDisplay);
+                    if (info is null)
                     {
-                        deletedPaths.Add(entry.PathDisplay);
-                        if (info.IsImageMetadata)
-                        {
-                            touchedImageMetaPaths.Add(entry.PathDisplay);
-                        }
-
-                        if (info.IsLibraryMetadata || info.IsImageMetadata)
-                        {
-                            touchedLibraryPaths.Add(info.LibraryPath);
-                        }
-
                         continue;
                     }
 
@@ -179,11 +197,7 @@ public static class DropboxPublishCommand
 
         foreach (string deleted in deletedPaths)
         {
-            var info = ParseEaglePath(rootPath, deleted);
-            if (info?.IsImageMetadata == true)
-            {
-                RemovePublishedImage(state, deleted, cachePath);
-            }
+            RemoveByDeletedDropboxPath(state, deleted, cachePath);
         }
 
         foreach (string libraryPath in touchedLibraryPaths.OrderBy(x => x, StringComparer.OrdinalIgnoreCase))
@@ -304,7 +318,9 @@ public static class DropboxPublishCommand
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Warning: skip {metadataPath}: {ex.Message}");
+            // File gone from Dropbox → drop from published set.
+            Console.WriteLine($"Warning: metadata missing, unpublish: {metadataPath} ({ex.Message})");
+            RemovePublishedImage(state, metadataPath, cachePath);
             return;
         }
 
@@ -324,13 +340,14 @@ public static class DropboxPublishCommand
             return;
         }
 
-        bool isPublished = (imageMeta.Tags ?? []).Any(t =>
-            string.Equals(t, publishTag, StringComparison.OrdinalIgnoreCase));
+        bool isPublished = !imageMeta.IsDeleted &&
+            (imageMeta.Tags ?? []).Any(t =>
+                string.Equals(t, publishTag, StringComparison.OrdinalIgnoreCase));
 
         if (!isPublished)
         {
             RemovePublishedImage(state, metadataPath, cachePath);
-            Console.WriteLine($"Unpublished (tag removed): {metadataPath}");
+            Console.WriteLine($"Unpublished (tag removed / deleted): {metadataPath}");
             return;
         }
 
@@ -392,6 +409,33 @@ public static class DropboxPublishCommand
 
             return true;
         });
+    }
+
+    private static void RemoveByDeletedDropboxPath(DropboxSyncState state, string deletedPath, string cachePath)
+    {
+        string path = deletedPath.Replace('\\', '/').TrimEnd('/');
+
+        // Direct metadata.json delete
+        if (state.Images.ContainsKey(path))
+        {
+            RemovePublishedImage(state, path, cachePath);
+            Console.WriteLine($"Removed published image (deleted metadata): {path}");
+            return;
+        }
+
+        // Deleted .info folder or any file inside it
+        foreach (string metadataPath in state.Images.Keys.ToList())
+        {
+            SyncImageState image = state.Images[metadataPath];
+            string infoDir = image.InfoDirPath.TrimEnd('/');
+            if (string.Equals(path, infoDir, StringComparison.OrdinalIgnoreCase) ||
+                path.StartsWith(infoDir + "/", StringComparison.OrdinalIgnoreCase) ||
+                string.Equals(path, image.SourceImagePath, StringComparison.OrdinalIgnoreCase))
+            {
+                RemovePublishedImage(state, metadataPath, cachePath);
+                Console.WriteLine($"Removed published image (deleted path {path}): {metadataPath}");
+            }
+        }
     }
 
     private static void RemovePublishedImage(DropboxSyncState state, string metadataPath, string cachePath)
