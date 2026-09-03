@@ -34,8 +34,7 @@ body {
 .left-panel { border-right: 1px solid var(--border); }
 .right-panel { border-left: 1px solid var(--border); padding: 16px; overflow: auto; }
 .brand { padding: 16px; font-weight: 600; border-bottom: 1px solid var(--border); }
-.tree-title { padding: 12px 12px 6px; color: var(--muted); font-size: 12px; }
-.folder-tree { padding: 0 12px 12px; overflow: auto; max-height: calc(100vh - 80px); }
+.folder-tree { padding: 12px; overflow: auto; max-height: calc(100vh - 64px); }
 .tree-item,.tree-library-header,.tree-subitem {
   width: 100%;
   text-align: left;
@@ -95,7 +94,6 @@ body {
   background: var(--panel);
 }
 .toolbar-main { flex: 1; min-width: 0; }
-.toolbar-title { font-weight: 600; margin-bottom: 6px; }
 .breadcrumb {
   display: flex;
   flex-wrap: wrap;
@@ -221,12 +219,6 @@ h2 { margin: 0 0 12px; font-size: 16px; }
   overflow: hidden;
 }
 .detail-image img { width: 100%; height: 100%; object-fit: contain; background: #1b1e22; }
-.detail-actions {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 12px;
-}
-.detail-actions .control-button { flex: 1; text-align: center; }
 .field { margin-bottom: 10px; }
 .field label { display: block; margin-bottom: 6px; color: var(--muted); font-size: 12px; }
 .field input,.field textarea {
@@ -236,11 +228,21 @@ h2 { margin: 0 0 12px; font-size: 16px; }
   border: 1px solid var(--border);
   background: var(--panel-soft);
   color: var(--text);
+  font-size: 13px;
 }
 .field textarea { min-height: 70px; resize: vertical; }
-.meta-block { margin-top: 14px; border-top: 1px solid var(--border); padding-top: 12px; display: grid; gap: 8px; }
-.meta-block div { display: flex; justify-content: space-between; }
+.meta-block {
+  margin-top: 14px;
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+  display: grid;
+  gap: 6px;
+  font-size: 12px;
+}
+.meta-block div { display: flex; justify-content: space-between; gap: 10px; }
 .meta-block span { color: var(--muted); }
+.meta-block strong { font-weight: 500; color: var(--text); font-size: 12px; }
+.right-panel h2 { font-size: 14px; font-weight: 600; }
 .lightbox {
   position: fixed;
   inset: 0;

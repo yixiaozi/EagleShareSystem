@@ -25,14 +25,11 @@ const searchInput = document.getElementById("searchInput");
 const sortSelect = document.getElementById("sortSelect");
 const tagFilters = document.getElementById("tagFilters");
 const clearFilters = document.getElementById("clearFilters");
-const toolbarTitle = document.getElementById("toolbarTitle");
 const breadcrumb = document.getElementById("breadcrumb");
 const libraryName = document.getElementById("libraryName");
 const leftPanel = document.getElementById("leftPanel");
 const openFolderPanel = document.getElementById("openFolderPanel");
 const closeFolderPanel = document.getElementById("closeFolderPanel");
-const copyLinkBtn = document.getElementById("copyLinkBtn");
-const downloadBtn = document.getElementById("downloadBtn");
 
 const preview = document.getElementById("preview");
 const detailName = document.getElementById("detailName");
@@ -54,7 +51,6 @@ const lightboxClose = document.getElementById("lightboxClose");
 const lightboxPrev = document.getElementById("lightboxPrev");
 const lightboxNext = document.getElementById("lightboxNext");
 const lightboxCaption = document.getElementById("lightboxCaption");
-const lightboxDownload = document.getElementById("lightboxDownload");
 
 main();
 
@@ -148,6 +144,12 @@ function hasChildFolders(folderId) {
   return siteData.folders.some((f) => sameId(f.parentId, folderId));
 }
 
+function countImagesInFolder(folderId) {
+  return siteData.images.filter((img) =>
+    (img.folderIds || []).some((fid) => isFolderOrDescendant(fid, folderId))
+  ).length;
+}
+
 function toggleFolderCollapsed(folderId, opts = {}) {
   if (collapsedFolderIds.has(folderId)) collapsedFolderIds.delete(folderId);
   else collapsedFolderIds.add(folderId);
@@ -196,7 +198,7 @@ function renderFolders() {
       content.className = "tree-library-content";
       const allInLib = document.createElement("button");
       allInLib.className = "tree-subitem all";
-      allInLib.textContent = "该库全部图片";
+      allInLib.textContent = `该库全部图片 (${lib.imageCount || 0})`;
       if (filterState.libraryId === lib.id && !filterState.folderId) allInLib.classList.add("is-active");
       allInLib.onclick = () => updateFilter({ libraryId: lib.id, folderId: null, resetSelectedImage: true, closePanel: true });
       content.appendChild(allInLib);
@@ -245,7 +247,8 @@ function appendFolderNodes(container, libraryId, parentId, depth) {
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "tree-subitem tree-folder-item";
-    btn.textContent = folder.name;
+    const count = countImagesInFolder(folder.id);
+    btn.textContent = `${folder.name} (${count})`;
     if ((filterState.folderId || "") === (folder.id || "")) btn.classList.add("is-active");
     btn.onclick = () => {
       if (hasChildren) toggleFolderCollapsed(folder.id, { skipRender: true });
@@ -420,12 +423,6 @@ function scheduleVirtualRender() {
 
 function renderGallery() {
   filteredImages = getFilteredImages();
-  const title = filterState.folderId
-    ? (siteData.folders.find((f) => f.id === filterState.folderId)?.name || "分类")
-    : (filterState.libraryId
-      ? (siteData.libraries.find((l) => l.id === filterState.libraryId)?.name || "图库")
-      : "全部图片");
-  toolbarTitle.textContent = `${title} (${filteredImages.length})`;
 
   if (!filteredImages.length) {
     gallerySpacer.style.height = "120px";
@@ -519,8 +516,6 @@ function renderDetail(image) {
     detailAddTime.textContent = "-";
     detailCreateTime.textContent = "-";
     detailModifyTime.textContent = "-";
-    downloadBtn.classList.add("is-disabled");
-    downloadBtn.removeAttribute("href");
     return;
   }
 
@@ -546,15 +541,6 @@ function renderDetail(image) {
     if (idx >= 0) openLightboxAt(idx);
   };
   preview.style.cursor = originalSrc ? "zoom-in" : "default";
-
-  if (originalSrc) {
-    downloadBtn.classList.remove("is-disabled");
-    downloadBtn.href = originalSrc;
-    downloadBtn.setAttribute("download", buildDownloadName(image));
-  } else {
-    downloadBtn.classList.add("is-disabled");
-    downloadBtn.removeAttribute("href");
-  }
 }
 
 function buildDownloadName(image) {
@@ -653,14 +639,6 @@ function openLightboxAt(index) {
   }
 
   lightboxCaption.textContent = `${image.name || image.id} (${index + 1}/${filteredImages.length})`;
-  if (originalSrc) {
-    lightboxDownload.classList.remove("is-disabled");
-    lightboxDownload.href = originalSrc;
-    lightboxDownload.setAttribute("download", buildDownloadName(image));
-  } else {
-    lightboxDownload.classList.add("is-disabled");
-    lightboxDownload.removeAttribute("href");
-  }
 
   lightboxImage.alt = image.name || "全屏预览";
   // show thumb first, then swap to original for perceived speed
@@ -722,19 +700,7 @@ clearFilters.addEventListener("click", () => {
 openFolderPanel?.addEventListener("click", () => leftPanel.classList.add("is-open"));
 closeFolderPanel?.addEventListener("click", () => leftPanel.classList.remove("is-open"));
 
-copyLinkBtn?.addEventListener("click", async () => {
-  if (!selectedImageId) return;
-  const url = buildShareUrl(selectedImageId);
-  try {
-    await navigator.clipboard.writeText(url);
-    showToast("直达链接已复制");
-  } catch {
-    prompt("复制下面的链接：", url);
-  }
-});
-
-lightboxClose?.addEventListener("click", closeLightbox);
-lightboxPrev?.addEventListener("click", () => stepLightbox(-1));
+lightboxClose?.addEventListener("click", closeLightbox);lightboxPrev?.addEventListener("click", () => stepLightbox(-1));
 lightboxNext?.addEventListener("click", () => stepLightbox(1));
 lightbox?.addEventListener("click", (e) => {
   if (e.target === lightbox) closeLightbox();

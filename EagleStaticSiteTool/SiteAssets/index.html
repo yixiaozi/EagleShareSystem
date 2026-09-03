@@ -11,7 +11,6 @@
     <aside class="left-panel" id="leftPanel">
       <div class="brand" id="libraryName">Eagle Multi Library</div>
       <button id="closeFolderPanel" class="mobile-close" type="button">收起分类</button>
-      <div class="tree-title">分类导航</div>
       <nav id="folderTree" class="folder-tree"></nav>
     </aside>
 
@@ -19,7 +18,6 @@
       <header class="toolbar">
         <button id="openFolderPanel" class="mobile-action" type="button">分类</button>
         <div class="toolbar-main">
-          <div class="toolbar-title" id="toolbarTitle">全部图片</div>
           <nav id="breadcrumb" class="breadcrumb" aria-label="当前位置"></nav>
           <div class="toolbar-filters">
             <input id="searchInput" class="search" type="text" placeholder="搜索文件名、标签...  (/)" />
@@ -43,10 +41,6 @@
     <aside class="right-panel">
       <h2>图片详情</h2>
       <div id="preview" class="detail-image placeholder">预览</div>
-      <div class="detail-actions">
-        <button id="copyLinkBtn" class="control-button" type="button">复制直达链接</button>
-        <a id="downloadBtn" class="control-button link-button" href="#" download>下载原图</a>
-      </div>
       <div class="field"><label>文件名</label><input id="detailName" readonly /></div>
       <div class="field"><label>链接</label><input id="detailUrl" readonly /></div>
       <div class="field"><label>标签</label><input id="detailTags" readonly /></div>
@@ -70,7 +64,6 @@
     <img id="lightboxImage" class="lightbox-image" alt="全屏预览" />
     <div class="lightbox-toolbar">
       <span id="lightboxCaption" class="lightbox-caption"></span>
-      <a id="lightboxDownload" class="control-button link-button" href="#" download>下载原图</a>
     </div>
   </div>
   <script src="./data.js"></script>
