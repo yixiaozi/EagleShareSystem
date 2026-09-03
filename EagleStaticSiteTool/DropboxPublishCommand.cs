@@ -239,6 +239,7 @@ public static class DropboxPublishCommand
         // Ensure assets exist for all published images (cache may be cold on CI).
         foreach (var image in state.Images.Values.ToList())
         {
+            BackfillThumbnailFields(image);
             await EnsureCachedAssetAsync(dbx, image, cachePath, original: true);
             await EnsureCachedAssetAsync(dbx, image, cachePath, original: false);
         }
@@ -366,26 +367,35 @@ public static class DropboxPublishCommand
         Console.WriteLine($"Published: {syncImage.Key}");
     }
 
+    private static void BackfillThumbnailFields(SyncImageState image)
+    {
+        if (string.IsNullOrWhiteSpace(image.ThumbnailAssetFileName) &&
+            !string.IsNullOrWhiteSpace(image.LibraryId) &&
+            !string.IsNullOrWhiteSpace(image.ImageId))
+        {
+            image.ThumbnailAssetFileName = $"{image.LibraryId}_{image.ImageId}_thumb.png";
+        }
+    }
+
     private static async Task EnsureCachedAssetAsync(
         DropboxApiClient dbx,
         SyncImageState image,
         string cachePath,
         bool original)
     {
-        string fileName = original ? image.AssetFileName : image.ThumbnailAssetFileName;
-        if (string.IsNullOrWhiteSpace(fileName))
-        {
-            return;
-        }
-
-        string localAsset = Path.Combine(cachePath, "assets", fileName);
-        if (File.Exists(localAsset))
-        {
-            return;
-        }
-
         if (original)
         {
+            if (string.IsNullOrWhiteSpace(image.AssetFileName))
+            {
+                return;
+            }
+
+            string localAsset = Path.Combine(cachePath, "assets", image.AssetFileName);
+            if (File.Exists(localAsset))
+            {
+                return;
+            }
+
             if (string.IsNullOrWhiteSpace(image.SourceImagePath))
             {
                 var (src, _) = await ResolveSourcePathsAsync(dbx, image);
@@ -403,28 +413,34 @@ public static class DropboxPublishCommand
             return;
         }
 
-        if (string.IsNullOrWhiteSpace(image.SourceThumbnailPath))
+        // Thumbnail path — resolve Dropbox source even for older state entries.
+        if (string.IsNullOrWhiteSpace(image.SourceThumbnailPath) ||
+            string.IsNullOrWhiteSpace(image.ThumbnailAssetFileName))
         {
             var (_, thumb) = await ResolveSourcePathsAsync(dbx, image);
             image.SourceThumbnailPath = thumb;
             if (!string.IsNullOrWhiteSpace(thumb))
             {
-                image.ThumbnailAssetFileName = $"{image.LibraryId}_{image.ImageId}_thumb{Path.GetExtension(thumb)}";
-                localAsset = Path.Combine(cachePath, "assets", image.ThumbnailAssetFileName);
-                if (File.Exists(localAsset))
-                {
-                    return;
-                }
+                image.ThumbnailAssetFileName =
+                    $"{image.LibraryId}_{image.ImageId}_thumb{Path.GetExtension(thumb)}";
             }
         }
 
-        if (string.IsNullOrWhiteSpace(image.SourceThumbnailPath))
+        if (string.IsNullOrWhiteSpace(image.SourceThumbnailPath) ||
+            string.IsNullOrWhiteSpace(image.ThumbnailAssetFileName))
+        {
+            Console.WriteLine($"Warning: no thumbnail for {image.Key}");
+            return;
+        }
+
+        string localThumb = Path.Combine(cachePath, "assets", image.ThumbnailAssetFileName);
+        if (File.Exists(localThumb))
         {
             return;
         }
 
         Console.WriteLine($"Downloading thumbnail: {image.SourceThumbnailPath}");
-        await dbx.DownloadToFileAsync(image.SourceThumbnailPath, localAsset);
+        await dbx.DownloadToFileAsync(image.SourceThumbnailPath, localThumb);
     }
 
     private static async Task<(string? SourceImage, string? SourceThumbnail)> ResolveSourcePathsAsync(
