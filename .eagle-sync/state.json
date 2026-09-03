@@ -1,5 +1,5 @@
 {
-  "Cursor": "AAbYNTaBVYpwRo1dmowlIu8wAj9IXy6bOtlbm5n9zZXf0oxiy-1E4p7MS8pm-Lc526s31e_JkeYKIeaaTTzgtcCplHhCVReEvnFLlBGmphwZIw0o22imEQNCaAN90V0Hw0mXSBeTj463EaBan0TVBLEy8yTnuPDDQg9o6ziMfRciRRImS0F3iV83zTHmVU2rFr8AznXQNy-twj5Q--8Ef6p6",
+  "Cursor": "AAassGfwFO7JMV7Y7WHdYd65gTp-0cWvVdOp0bNq-xwCA1rCQgxUn-OQgepGEdWqpNYAScdPzYlcqbN7yMcLZ4UHyJq6nqDxo-r7BR_70UDWAbO-khUFHs6oaup-LpGmbJiIRHcpJN9aqfYF69g7rVYvOdp6XjiMRmh6LtHrlmaArgB5CO96cW7nMKsDjrufqheQNDcneszx4bm6UVYXRghl",
   "RootPath": "/Eagle",
   "Since": "2026-09-01T00:00:00.0000000\u002B08:00",
   "BootstrapCompleted": true,
@@ -9,6 +9,12 @@
       "Name": "EagleDemo",
       "Path": "/Eagle/EagleDemo.library",
       "MetadataJson": "{\u0022folders\u0022:[{\u0022id\u0022:\u0022MO8THOBSR6N5G\u0022,\u0022name\u0022:\u0022目录\u0022,\u0022description\u0022:\u0022\u0022,\u0022children\u0022:[{\u0022id\u0022:\u0022MO8THU7RSISFV\u0022,\u0022name\u0022:\u0022测试\u0022,\u0022description\u0022:\u0022\u0022,\u0022children\u0022:[],\u0022modificationTime\u0022:1776787656759,\u0022tags\u0022:[],\u0022password\u0022:\u0022\u0022,\u0022passwordTips\u0022:\u0022\u0022}],\u0022modificationTime\u0022:1776787649128,\u0022tags\u0022:[],\u0022password\u0022:\u0022\u0022,\u0022passwordTips\u0022:\u0022\u0022},{\u0022id\u0022:\u0022MO8TZVLYO0E75\u0022,\u0022name\u0022:\u0022壁纸\u0022,\u0022description\u0022:\u0022\u0022,\u0022children\u0022:[{\u0022id\u0022:\u0022MO8U0EOCVYX6F\u0022,\u0022name\u0022:\u0022风景\u0022,\u0022description\u0022:\u0022\u0022,\u0022children\u0022:[],\u0022modificationTime\u0022:1776788523084,\u0022tags\u0022:[],\u0022password\u0022:\u0022\u0022,\u0022passwordTips\u0022:\u0022\u0022},{\u0022id\u0022:\u0022MO8U023LR4DOV\u0022,\u0022name\u0022:\u0022极简\u0022,\u0022description\u0022:\u0022\u0022,\u0022children\u0022:[],\u0022modificationTime\u0022:1776788506785,\u0022tags\u0022:[],\u0022password\u0022:\u0022\u0022,\u0022passwordTips\u0022:\u0022\u0022}],\u0022modificationTime\u0022:1776788498374,\u0022tags\u0022:[],\u0022password\u0022:\u0022\u0022,\u0022passwordTips\u0022:\u0022\u0022}],\u0022smartFolders\u0022:[],\u0022quickAccess\u0022:[],\u0022tagsGroups\u0022:[],\u0022modificationTime\u0022:1776788527066,\u0022applicationVersion\u0022:\u00224.0.0\u0022}"
+    },
+    "/Eagle/公司电脑个人库.library": {
+      "Id": "lib-dcf84bd0d0",
+      "Name": "公司电脑个人库",
+      "Path": "/Eagle/公司电脑个人库.library",
+      "MetadataJson": "{\u0022folders\u0022:[{\u0022id\u0022:\u0022MQI3QN9BO4CZR\u0022,\u0022name\u0022:\u0022未命名文件夹\u0022,\u0022description\u0022:\u0022\u0022,\u0022children\u0022:[],\u0022modificationTime\u0022:1781702624063,\u0022tags\u0022:[],\u0022password\u0022:\u0022\u0022,\u0022passwordTips\u0022:\u0022\u0022},{\u0022id\u0022:\u0022M4EU8WSG797WE\u0022,\u0022name\u0022:\u0022个人\u0022,\u0022description\u0022:\u0022\u0022,\u0022children\u0022:[{\u0022id\u0022:\u0022MH4931TGEBNVH\u0022,\u0022name\u0022:\u0022个人照片\u0022,\u0022description\u0022:\u0022\u0022,\u0022children\u0022:[],\u0022modificationTime\u0022:1761274033396,\u0022tags\u0022:[],\u0022icon\u0022:\u0022smile\u0022,\u0022iconColor\u0022:\u0022red\u0022,\u0022password\u0022:\u0022\u0022,\u0022passwordTips\u0022:\u0022\u0022}],\u0022modificationTime\u0022:1733616070144,\u0022tags\u0022:[],\u0022icon\u0022:\u0022smile\u0022,\u0022iconColor\u0022:\u0022red\u0022,\u0022password\u0022:\u0022\u0022,\u0022passwordTips\u0022:\u0022\u0022},{\u0022id\u0022:\u0022MOGSGCJYYUHIQ\u0022,\u0022name\u0022:\u0022聊天记录\u0022,\u0022description\u0022:\u0022\u0022,\u0022children\u0022:[],\u0022modificationTime\u0022:1777269637006,\u0022tags\u0022:[],\u0022password\u0022:\u0022\u0022,\u0022passwordTips\u0022:\u0022\u0022}],\u0022smartFolders\u0022:[],\u0022quickAccess\u0022:[],\u0022tagsGroups\u0022:[],\u0022modificationTime\u0022:1788440750382,\u0022applicationVersion\u0022:\u00224.0.0\u0022}"
     }
   },
   "Images": {
@@ -77,6 +83,40 @@
         "btime": 1776788461464,
         "mtime": 1703067631540,
         "lastModified": 1788437452551,
+        "isDeleted": false
+      }
+    },
+    "/Eagle/公司电脑个人库.library/images/MH493A0Q1ZGOA.info/metadata.json": {
+      "Key": "lib-dcf84bd0d0:MH493A0Q1ZGOA",
+      "LibraryPath": "/Eagle/公司电脑个人库.library",
+      "LibraryId": "lib-dcf84bd0d0",
+      "LibraryName": "公司电脑个人库",
+      "ImageId": "MH493A0Q1ZGOA",
+      "MetadataPath": "/Eagle/公司电脑个人库.library/images/MH493A0Q1ZGOA.info/metadata.json",
+      "InfoDirPath": "/Eagle/公司电脑个人库.library/images/MH493A0Q1ZGOA.info",
+      "SourceImagePath": "/Eagle/公司电脑个人库.library/images/MH493A0Q1ZGOA.info/在西邢岭吃西瓜.jpg",
+      "SourceThumbnailPath": "/Eagle/公司电脑个人库.library/images/MH493A0Q1ZGOA.info/在西邢岭吃西瓜_thumbnail.png",
+      "AssetFileName": "lib-dcf84bd0d0_MH493A0Q1ZGOA.jpg",
+      "ThumbnailAssetFileName": "lib-dcf84bd0d0_MH493A0Q1ZGOA_thumb.png",
+      "Metadata": {
+        "id": "MH493A0Q1ZGOA",
+        "name": "在西邢岭吃西瓜",
+        "ext": "jpg",
+        "size": 479338,
+        "width": 1279,
+        "height": 2837,
+        "folders": [
+          "MH4931TGEBNVH"
+        ],
+        "tags": [
+          "发布"
+        ],
+        "url": "",
+        "annotation": "",
+        "modificationTime": 1774602254033,
+        "btime": 1762286633135,
+        "mtime": 1761211379000,
+        "lastModified": 1788442578485,
         "isDeleted": false
       }
     }
