@@ -123,6 +123,11 @@ public static class SiteGenerator
             });
         }
 
+        // Only keep libraries/folders that actually have published images.
+        librariesData = librariesData.Where(l => l.ImageCount > 0).ToList();
+        var libraryIdsWithImages = librariesData.Select(l => l.Id).ToHashSet(StringComparer.OrdinalIgnoreCase);
+        flatFolders = flatFolders.Where(f => libraryIdsWithImages.Contains(f.LibraryId)).ToList();
+
         imageItems = imageItems
             .OrderByDescending(i => i.ModificationTime)
             .ThenBy(i => i.Name, StringComparer.OrdinalIgnoreCase)
@@ -134,6 +139,8 @@ public static class SiteGenerator
             image.FolderPath = BuildPrimaryFolderPath(image.FolderIds, folderLookup);
             image.SearchTokens = BuildSearchTokens(image);
         }
+
+        flatFolders = FilterFoldersWithPublishedImages(flatFolders, imageItems);
 
         List<string> allTags = imageItems
             .SelectMany(i => i.Tags)
@@ -160,6 +167,33 @@ public static class SiteGenerator
         Console.WriteLine($"Libraries: {siteData.Libraries.Count}");
         Console.WriteLine($"Published images: {siteData.Images.Count}");
         Console.WriteLine($"Images with source file: {siteData.Images.Count(i => !string.IsNullOrWhiteSpace(i.ImagePath))}/{siteData.Images.Count}");
+    }
+
+    public static List<FolderDto> FilterFoldersWithPublishedImages(
+        List<FolderDto> folders,
+        IEnumerable<ImageItemDto> images)
+    {
+        var byId = folders.ToDictionary(f => f.Id, StringComparer.OrdinalIgnoreCase);
+        var keep = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+        foreach (ImageItemDto image in images)
+        {
+            foreach (string folderId in image.FolderIds)
+            {
+                string? currentId = folderId;
+                while (!string.IsNullOrWhiteSpace(currentId) && byId.TryGetValue(currentId, out FolderDto? folder))
+                {
+                    if (!keep.Add(folder.Id))
+                    {
+                        break;
+                    }
+
+                    currentId = folder.ParentId;
+                }
+            }
+        }
+
+        return folders.Where(f => keep.Contains(f.Id)).ToList();
     }
 
     public static void FlattenFolders(

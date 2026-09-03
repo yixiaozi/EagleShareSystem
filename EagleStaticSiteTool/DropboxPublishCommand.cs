@@ -188,6 +188,16 @@ public static class DropboxPublishCommand
 
         foreach (string libraryPath in touchedLibraryPaths.OrderBy(x => x, StringComparer.OrdinalIgnoreCase))
         {
+            bool hasImageChange = touchedImageMetaPaths.Any(p =>
+                p.StartsWith(libraryPath.TrimEnd('/') + "/", StringComparison.OrdinalIgnoreCase));
+            bool alreadyPublished = state.Images.Values.Any(i =>
+                string.Equals(i.LibraryPath, libraryPath, StringComparison.OrdinalIgnoreCase));
+            if (!hasImageChange && !alreadyPublished)
+            {
+                Console.WriteLine($"Skip library metadata (no published images): {libraryPath}");
+                continue;
+            }
+
             await EnsureLibraryAsync(dbx, state, libraryPath);
         }
 
@@ -199,6 +209,17 @@ public static class DropboxPublishCommand
             }
 
             await ProcessImageMetadataAsync(dbx, state, metaPath, publishTag, cachePath);
+        }
+
+        // Drop libraries that currently have zero published images.
+        foreach (string libraryPath in state.Libraries.Keys.ToList())
+        {
+            bool hasImages = state.Images.Values.Any(i =>
+                string.Equals(i.LibraryPath, libraryPath, StringComparison.OrdinalIgnoreCase));
+            if (!hasImages)
+            {
+                state.Libraries.Remove(libraryPath);
+            }
         }
 
         // Ensure assets exist for all published images (cache may be cold on CI).

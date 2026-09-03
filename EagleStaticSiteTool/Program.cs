@@ -161,6 +161,9 @@ foreach (ImageItemDto image in imageItems)
     image.SearchTokens = SiteGenerator.BuildSearchTokens(image);
 }
 
+flatFolders = SiteGenerator.FilterFoldersWithPublishedImages(flatFolders, imageItems);
+librariesData = librariesData.Where(l => l.ImageCount > 0).ToList();
+
 List<string> allTags = imageItems
     .SelectMany(i => i.Tags)
     .Where(t => !string.IsNullOrWhiteSpace(t))
