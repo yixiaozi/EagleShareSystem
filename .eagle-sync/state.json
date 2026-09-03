@@ -1,8 +1,47 @@
 {
-  "Cursor": "AAbfInEFarz_o_Sp3zNJdoFL7VikgIlgjj9mPp2oaK0neC_oLW-tWeykWGDN3m8PsJSpdNIfzq_Dx8w-lUsqCdfNjdTZOv1Gv-4ziqv6dJu0LORsDqdCGf0qw-ABi2OZpDTa6tS1UbMznxlGXpe0lOvmw2-Z_s1ohhyLm-3DwPydjm6u_OHLJc2nVL-Pv9Ym4nJWvcBOZPm0MnQnkyega8lM",
+  "Cursor": "AAaGuSDMIyBwBNH4y4F36jY7E3KtrA8j2KJFKmmK3p3KCvnd18J_FLCLi8LN1MmrhgmjliTEhrZy2kPRiFROwphFERNhT18eNrSoZR7XnjoGEDpmYPFLTuqe2NEXABqEnfVVe5t0nqlZpSB1mQDkCg64vJzk3z7NhX4SRED94xMCVXk5AihEMZnK5c05zLwbY4X4BAs390CZOUvMiim2KFhO",
   "RootPath": "/Eagle",
   "Since": "2026-09-01T00:00:00.0000000\u002B08:00",
   "BootstrapCompleted": true,
-  "Libraries": {},
-  "Images": {}
+  "Libraries": {
+    "/Eagle/EagleDemo.library": {
+      "Id": "lib-bb02c06eef",
+      "Name": "EagleDemo",
+      "Path": "/Eagle/EagleDemo.library",
+      "MetadataJson": "{\u0022folders\u0022:[{\u0022id\u0022:\u0022MO8THOBSR6N5G\u0022,\u0022name\u0022:\u0022目录\u0022,\u0022description\u0022:\u0022\u0022,\u0022children\u0022:[{\u0022id\u0022:\u0022MO8THU7RSISFV\u0022,\u0022name\u0022:\u0022测试\u0022,\u0022description\u0022:\u0022\u0022,\u0022children\u0022:[],\u0022modificationTime\u0022:1776787656759,\u0022tags\u0022:[],\u0022password\u0022:\u0022\u0022,\u0022passwordTips\u0022:\u0022\u0022}],\u0022modificationTime\u0022:1776787649128,\u0022tags\u0022:[],\u0022password\u0022:\u0022\u0022,\u0022passwordTips\u0022:\u0022\u0022},{\u0022id\u0022:\u0022MO8TZVLYO0E75\u0022,\u0022name\u0022:\u0022壁纸\u0022,\u0022description\u0022:\u0022\u0022,\u0022children\u0022:[{\u0022id\u0022:\u0022MO8U0EOCVYX6F\u0022,\u0022name\u0022:\u0022风景\u0022,\u0022description\u0022:\u0022\u0022,\u0022children\u0022:[],\u0022modificationTime\u0022:1776788523084,\u0022tags\u0022:[],\u0022password\u0022:\u0022\u0022,\u0022passwordTips\u0022:\u0022\u0022},{\u0022id\u0022:\u0022MO8U023LR4DOV\u0022,\u0022name\u0022:\u0022极简\u0022,\u0022description\u0022:\u0022\u0022,\u0022children\u0022:[],\u0022modificationTime\u0022:1776788506785,\u0022tags\u0022:[],\u0022password\u0022:\u0022\u0022,\u0022passwordTips\u0022:\u0022\u0022}],\u0022modificationTime\u0022:1776788498374,\u0022tags\u0022:[],\u0022password\u0022:\u0022\u0022,\u0022passwordTips\u0022:\u0022\u0022}],\u0022smartFolders\u0022:[],\u0022quickAccess\u0022:[],\u0022tagsGroups\u0022:[],\u0022modificationTime\u0022:1776788527066,\u0022applicationVersion\u0022:\u00224.0.0\u0022}"
+    }
+  },
+  "Images": {
+    "/Eagle/EagleDemo.library/images/JOBU43QLS1MHE.info/metadata.json": {
+      "Key": "lib-bb02c06eef:JOBU43QLS1MHE",
+      "LibraryPath": "/Eagle/EagleDemo.library",
+      "LibraryId": "lib-bb02c06eef",
+      "LibraryName": "EagleDemo",
+      "ImageId": "JOBU43QLS1MHE",
+      "MetadataPath": "/Eagle/EagleDemo.library/images/JOBU43QLS1MHE.info/metadata.json",
+      "InfoDirPath": "/Eagle/EagleDemo.library/images/JOBU43QLS1MHE.info",
+      "SourceImagePath": "/Eagle/EagleDemo.library/images/JOBU43QLS1MHE.info/e86.jpg",
+      "AssetFileName": "lib-bb02c06eef_JOBU43QLS1MHE.jpg",
+      "Metadata": {
+        "id": "JOBU43QLS1MHE",
+        "name": "e86",
+        "ext": "jpg",
+        "size": 7517916,
+        "width": 5184,
+        "height": 3456,
+        "folders": [
+          "MO8U023LR4DOV"
+        ],
+        "tags": [
+          "发布"
+        ],
+        "url": "",
+        "annotation": "",
+        "modificationTime": 1776788489451,
+        "btime": 0,
+        "mtime": 0,
+        "lastModified": 1788436204008
+      }
+    }
+  }
 }
