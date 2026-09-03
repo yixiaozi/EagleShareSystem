@@ -7,6 +7,9 @@
 # Generated static site (built locally and by GitHub Actions)
 [Ee]agleSiteOutput/
 
+# Dropbox sync cache (binaries); state.json is committed for cursor persistence
+.eagle-sync/cache/
+
 # Publish folders
 **/publish/
 

@@ -4,13 +4,22 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - ".eagle-sync/**"
+  schedule:
+    # Every hour
+    - cron: "0 * * * *"
   workflow_dispatch:
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+  DROPBOX_LIBRARY_PATH: ${{ vars.DROPBOX_LIBRARY_PATH }}
+  DROPBOX_SINCE: ${{ vars.DROPBOX_SINCE }}
+  DROPBOX_STATE_PATH: ./.eagle-sync/state.json
+  DROPBOX_CACHE_PATH: ./.eagle-sync/cache
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -30,8 +39,35 @@ jobs:
         with:
           dotnet-version: "9.0.x"
 
-      - name: Generate static site from all demo libraries
-        run: dotnet run --project ./EagleStaticSiteTool -- . ./EagleSiteOutput 发布
+      - name: Cache Dropbox assets
+        uses: actions/cache@v4
+        with:
+          path: .eagle-sync/cache
+          key: eagle-cache-${{ github.run_id }}
+          restore-keys: |
+            eagle-cache-
+
+      - name: Sync Dropbox changes and generate site
+        env:
+          DROPBOX_APP_KEY: ${{ secrets.DROPBOX_APP_KEY }}
+          DROPBOX_APP_SECRET: ${{ secrets.DROPBOX_APP_SECRET }}
+          DROPBOX_REFRESH_TOKEN: ${{ secrets.DROPBOX_REFRESH_TOKEN }}
+          DROPBOX_LIBRARY_PATH: ${{ vars.DROPBOX_LIBRARY_PATH || secrets.DROPBOX_LIBRARY_PATH || '/Eagle' }}
+          DROPBOX_SINCE: ${{ vars.DROPBOX_SINCE || secrets.DROPBOX_SINCE || '2026-09-01T00:00:00+08:00' }}
+        run: dotnet run --project ./EagleStaticSiteTool -c Release -- dropbox ./EagleSiteOutput 发布
+
+      - name: Persist sync state
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          mkdir -p .eagle-sync
+          git add .eagle-sync/state.json
+          if git diff --cached --quiet; then
+            echo "No sync state changes."
+          else
+            git commit -m "chore: update Dropbox sync state [skip ci]"
+            git push
+          fi
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
