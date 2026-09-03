@@ -70,6 +70,36 @@ jobs:
             git push
           fi
 
+      - name: Install rsync and sshpass
+        run: sudo apt-get update && sudo apt-get install -y rsync sshpass
+
+      - name: Deploy to server (incremental rsync)
+        env:
+          SSHPASS: ${{ secrets.SERVER_PASSWORD }}
+          SERVER_IP: ${{ secrets.SERVER_IP }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_EAGLEPATH: ${{ secrets.SERVER_EAGLEPATH }}
+        run: |
+          set -euo pipefail
+          if [ -z "${SERVER_IP:-}" ] || [ -z "${SERVER_USER:-}" ] || [ -z "${SERVER_EAGLEPATH:-}" ] || [ -z "${SSHPASS:-}" ]; then
+            echo "Server secrets missing; skip remote deploy."
+            exit 0
+          fi
+
+          SSH_OPTS="-o StrictHostKeyChecking=accept-new -o PreferredAuthentications=password -o PubkeyAuthentication=no"
+
+          # Ensure remote directory exists
+          sshpass -e ssh $SSH_OPTS "${SERVER_USER}@${SERVER_IP}" "mkdir -p '${SERVER_EAGLEPATH}'"
+
+          # --checksum: only upload files whose content changed (CI always refreshes mtimes)
+          # --delete: remove unpublished assets on server without wiping/refilling the whole site
+          sshpass -e rsync -avz --checksum --delete \
+            -e "ssh $SSH_OPTS" \
+            ./EagleSiteOutput/ \
+            "${SERVER_USER}@${SERVER_IP}:${SERVER_EAGLEPATH}/"
+
+          echo "Server deploy done: https://eagle.mantoublog.top/"
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
@@ -78,7 +108,7 @@ jobs:
         with:
           path: ./EagleSiteOutput
 
-  deploy:
+  deploy-pages:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
