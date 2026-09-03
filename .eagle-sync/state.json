@@ -1,5 +1,5 @@
 {
-  "Cursor": "AAaMcvUFpTrHCR1npKbNqT5CNQnihEtspG_mmFFOPHV33rKMRxzq2-FWwRFu4cvvsgaCw5TFQ4T-XXsrdwx36PykGdyxRDaeTuo49mudTowodSq_wfp_Mv8PKzikFNc_6jk0nsim9U-D9xbOxwZFPHjh-Wqw_NvR-GdATgd3HiulCMyccgoOikKE19YJ1tiMvI4vUqEQwnHYYyI8XGPEM5yk",
+  "Cursor": "AAakZvNqvKiUW59tS3KigRIwFvLqr1QOmW2Zk1M84BbKb9GXRo5K6eRA5JJExl3ct1VwXWGWLHni_4_4_-3pGV7X6UEdrhn5tmIoYON7JNaK-JvbPI3ptIpk0Yt0j0GdRoE_giOXbTsQ5pe2xa8IgA8zOkyV5ygDwROVWEkjxnLlCYU8uvW4Niv1eDGwu--Sd4mnVp2h6CyEYCnAYa2gkjXQ",
   "RootPath": "/Eagle",
   "Since": "2026-09-01T00:00:00.0000000\u002B08:00",
   "BootstrapCompleted": true,
@@ -21,7 +21,9 @@
       "MetadataPath": "/Eagle/EagleDemo.library/images/JOBU43QLS1MHE.info/metadata.json",
       "InfoDirPath": "/Eagle/EagleDemo.library/images/JOBU43QLS1MHE.info",
       "SourceImagePath": "/Eagle/EagleDemo.library/images/JOBU43QLS1MHE.info/我很喜欢的向日葵.jpg",
+      "SourceThumbnailPath": null,
       "AssetFileName": "lib-bb02c06eef_JOBU43QLS1MHE.jpg",
+      "ThumbnailAssetFileName": "",
       "Metadata": {
         "id": "JOBU43QLS1MHE",
         "name": "我很喜欢的向日葵",
@@ -53,7 +55,9 @@
       "MetadataPath": "/Eagle/EagleDemo.library/images/KTJ695FIAVKDF.info/metadata.json",
       "InfoDirPath": "/Eagle/EagleDemo.library/images/KTJ695FIAVKDF.info",
       "SourceImagePath": "/Eagle/EagleDemo.library/images/KTJ695FIAVKDF.info/美丽的海洋和天空.jpg",
+      "SourceThumbnailPath": null,
       "AssetFileName": "lib-bb02c06eef_KTJ695FIAVKDF.jpg",
+      "ThumbnailAssetFileName": "",
       "Metadata": {
         "id": "KTJ695FIAVKDF",
         "name": "美丽的海洋和天空",
