@@ -20,8 +20,9 @@
         <button id="openFolderPanel" class="mobile-action" type="button">分类</button>
         <div class="toolbar-main">
           <div class="toolbar-title" id="toolbarTitle">全部图片</div>
+          <nav id="breadcrumb" class="breadcrumb" aria-label="当前位置"></nav>
           <div class="toolbar-filters">
-            <input id="searchInput" class="search" type="text" placeholder="搜索文件名、标签..." />
+            <input id="searchInput" class="search" type="text" placeholder="搜索文件名、标签...  (/)" />
             <select id="sortSelect" class="control-select">
               <option value="latest">最新发布</option>
               <option value="modified">最近修改</option>
@@ -32,12 +33,20 @@
           <div id="tagFilters" class="tag-filters"></div>
         </div>
       </header>
-      <section id="galleryGrid" class="gallery-grid"></section>
+      <section id="galleryViewport" class="gallery-viewport">
+        <div id="gallerySpacer" class="gallery-spacer">
+          <div id="galleryGrid" class="gallery-grid"></div>
+        </div>
+      </section>
     </main>
 
     <aside class="right-panel">
       <h2>图片详情</h2>
       <div id="preview" class="detail-image placeholder">预览</div>
+      <div class="detail-actions">
+        <button id="copyLinkBtn" class="control-button" type="button">复制直达链接</button>
+        <a id="downloadBtn" class="control-button link-button" href="#" download>下载原图</a>
+      </div>
       <div class="field"><label>文件名</label><input id="detailName" readonly /></div>
       <div class="field"><label>链接</label><input id="detailUrl" readonly /></div>
       <div class="field"><label>标签</label><input id="detailTags" readonly /></div>
@@ -56,7 +65,13 @@
   </div>
   <div id="lightbox" class="lightbox" aria-hidden="true">
     <button id="lightboxClose" class="lightbox-close" type="button">关闭</button>
+    <button id="lightboxPrev" class="lightbox-nav lightbox-prev" type="button" aria-label="上一张">‹</button>
+    <button id="lightboxNext" class="lightbox-nav lightbox-next" type="button" aria-label="下一张">›</button>
     <img id="lightboxImage" class="lightbox-image" alt="全屏预览" />
+    <div class="lightbox-toolbar">
+      <span id="lightboxCaption" class="lightbox-caption"></span>
+      <a id="lightboxDownload" class="control-button link-button" href="#" download>下载原图</a>
+    </div>
   </div>
   <script src="./data.js"></script>
   <script src="./app.js"></script>

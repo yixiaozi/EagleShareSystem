@@ -26,7 +26,9 @@ public sealed class SyncImageState
     public string MetadataPath { get; set; } = "";
     public string InfoDirPath { get; set; } = "";
     public string? SourceImagePath { get; set; }
+    public string? SourceThumbnailPath { get; set; }
     public string AssetFileName { get; set; } = "";
+    public string ThumbnailAssetFileName { get; set; } = "";
     public ImageMetadata Metadata { get; set; } = new();
 }
 

@@ -117,4 +117,5 @@ public sealed class ImageItemDto
     public long LastModified { get; set; }
     public string SearchTokens { get; set; } = string.Empty;
     public string? ImagePath { get; set; }
+    public string? ThumbnailPath { get; set; }
 }

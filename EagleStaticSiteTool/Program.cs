@@ -103,7 +103,9 @@ for (int i = 0; i < libraries.Count; i++)
         }
 
         string? sourceImagePath = FindSourceImage(infoDir, imageMeta);
+        string? sourceThumbPath = FindThumbnail(infoDir);
         string? relativeAssetPath = null;
+        string? relativeThumbPath = null;
 
         if (sourceImagePath is not null)
         {
@@ -112,6 +114,15 @@ for (int i = 0; i < libraries.Count; i++)
             string targetPath = Path.Combine(assetsOutput, targetName);
             File.Copy(sourceImagePath, targetPath, overwrite: true);
             relativeAssetPath = $"assets/{targetName}";
+        }
+
+        if (sourceThumbPath is not null)
+        {
+            string thumbExt = Path.GetExtension(sourceThumbPath);
+            string thumbName = $"{libraryId}_{imageMeta.Id}_thumb{thumbExt}";
+            string thumbTarget = Path.Combine(assetsOutput, thumbName);
+            File.Copy(sourceThumbPath, thumbTarget, overwrite: true);
+            relativeThumbPath = $"assets/{thumbName}";
         }
 
         imageItems.Add(new ImageItemDto
@@ -135,7 +146,8 @@ for (int i = 0; i < libraries.Count; i++)
             Mtime = imageMeta.Mtime,
             LastModified = imageMeta.LastModified,
             SearchTokens = string.Empty,
-            ImagePath = relativeAssetPath
+            ImagePath = relativeAssetPath,
+            ThumbnailPath = relativeThumbPath ?? relativeAssetPath
         });
         publishedCountForLibrary++;
     }
@@ -253,4 +265,10 @@ static string? FindSourceImage(string infoDir, ImageMetadata imageMeta)
 
         return !name.Contains("_thumbnail", StringComparison.OrdinalIgnoreCase);
     });
+}
+
+static string? FindThumbnail(string infoDir)
+{
+    return Directory.GetFiles(infoDir)
+        .FirstOrDefault(f => Path.GetFileName(f).Contains("_thumbnail", StringComparison.OrdinalIgnoreCase));
 }

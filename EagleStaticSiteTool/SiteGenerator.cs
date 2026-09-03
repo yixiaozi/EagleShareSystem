@@ -71,6 +71,18 @@ public static class SiteGenerator
                     relativeAssetPath = $"assets/{image.AssetFileName}";
                 }
 
+                string? relativeThumbPath = null;
+                if (!string.IsNullOrWhiteSpace(image.ThumbnailAssetFileName))
+                {
+                    string cacheThumb = Path.Combine(cachePath, "assets", image.ThumbnailAssetFileName);
+                    if (File.Exists(cacheThumb))
+                    {
+                        string targetThumb = Path.Combine(assetsOutput, image.ThumbnailAssetFileName);
+                        File.Copy(cacheThumb, targetThumb, overwrite: true);
+                        relativeThumbPath = $"assets/{image.ThumbnailAssetFileName}";
+                    }
+                }
+
                 ImageMetadata meta = image.Metadata;
                 imageItems.Add(new ImageItemDto
                 {
@@ -93,7 +105,8 @@ public static class SiteGenerator
                     Mtime = meta.Mtime,
                     LastModified = meta.LastModified,
                     SearchTokens = string.Empty,
-                    ImagePath = relativeAssetPath
+                    ImagePath = relativeAssetPath,
+                    ThumbnailPath = relativeThumbPath ?? relativeAssetPath
                 });
             }
 
@@ -167,6 +180,7 @@ public static class SiteGenerator
         Console.WriteLine($"Libraries: {siteData.Libraries.Count}");
         Console.WriteLine($"Published images: {siteData.Images.Count}");
         Console.WriteLine($"Images with source file: {siteData.Images.Count(i => !string.IsNullOrWhiteSpace(i.ImagePath))}/{siteData.Images.Count}");
+        Console.WriteLine($"Images with thumbnail: {siteData.Images.Count(i => !string.IsNullOrWhiteSpace(i.ThumbnailPath))}/{siteData.Images.Count}");
     }
 
     public static List<FolderDto> FilterFoldersWithPublishedImages(
