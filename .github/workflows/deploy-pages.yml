@@ -54,6 +54,7 @@ jobs:
           DROPBOX_REFRESH_TOKEN: ${{ secrets.DROPBOX_REFRESH_TOKEN }}
           DROPBOX_LIBRARY_PATH: ${{ vars.DROPBOX_LIBRARY_PATH || secrets.DROPBOX_LIBRARY_PATH || '/Eagle' }}
           DROPBOX_SINCE: ${{ vars.DROPBOX_SINCE || secrets.DROPBOX_SINCE || '2026-09-01T00:00:00+08:00' }}
+          DROPBOX_BOOTSTRAP_MODE: cursor
         run: dotnet run --project ./EagleStaticSiteTool -c Release -- dropbox ./EagleSiteOutput 发布
 
       - name: Persist sync state

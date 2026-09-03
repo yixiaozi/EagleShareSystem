@@ -53,55 +53,71 @@ public static class DropboxPublishCommand
         var touchedImageMetaPaths = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         var deletedPaths = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
-        if (!state.BootstrapCompleted || string.IsNullOrWhiteSpace(state.Cursor))
+        // Dropbox cannot "list only files after a date". Listing a huge library takes hours.
+        // Default bootstrap only takes the latest cursor ("from now on"). Optional since-scan is slow.
+        string bootstrapMode = EnvOrDefault("DROPBOX_BOOTSTRAP_MODE", "cursor").ToLowerInvariant();
+        bool hadCursorAlready = state.BootstrapCompleted && !string.IsNullOrWhiteSpace(state.Cursor);
+
+        if (!hadCursorAlready)
         {
-            Console.WriteLine("Bootstrap: listing Dropbox entries and keeping only changes since start date (no full metadata download)...");
-            string? cursor = null;
-            bool hasMore = true;
-            int page = 0;
-            int matched = 0;
-            while (hasMore)
+            if (bootstrapMode == "since-scan")
             {
-                page++;
-                var (entries, nextCursor, more) = await dbx.ListFolderAsync(rootPath, cursor);
-                cursor = nextCursor;
-                hasMore = more;
-                foreach (var entry in entries)
+                Console.WriteLine("Bootstrap(since-scan): listing ALL entries under root, then filtering by date (SLOW)...");
+                string? cursor = null;
+                bool hasMore = true;
+                int page = 0;
+                int matched = 0;
+                while (hasMore)
                 {
-                    if (!entry.IsFile || entry.IsDeleted)
+                    page++;
+                    var (entries, nextCursor, more) = await dbx.ListFolderAsync(rootPath, cursor);
+                    cursor = nextCursor;
+                    hasMore = more;
+                    foreach (var entry in entries)
                     {
-                        continue;
+                        if (!entry.IsFile || entry.IsDeleted)
+                        {
+                            continue;
+                        }
+
+                        if (entry.ServerModified is null || entry.ServerModified < since)
+                        {
+                            continue;
+                        }
+
+                        var info = ParseEaglePath(rootPath, entry.PathDisplay);
+                        if (info is null)
+                        {
+                            continue;
+                        }
+
+                        matched++;
+                        if (info.IsLibraryMetadata)
+                        {
+                            touchedLibraryPaths.Add(info.LibraryPath);
+                        }
+                        else if (info.IsImageMetadata)
+                        {
+                            touchedImageMetaPaths.Add(entry.PathDisplay);
+                            touchedLibraryPaths.Add(info.LibraryPath);
+                        }
                     }
 
-                    if (entry.ServerModified is null || entry.ServerModified < since)
-                    {
-                        continue;
-                    }
-
-                    var info = ParseEaglePath(rootPath, entry.PathDisplay);
-                    if (info is null)
-                    {
-                        continue;
-                    }
-
-                    matched++;
-                    if (info.IsLibraryMetadata)
-                    {
-                        touchedLibraryPaths.Add(info.LibraryPath);
-                    }
-                    else if (info.IsImageMetadata)
-                    {
-                        touchedImageMetaPaths.Add(entry.PathDisplay);
-                        touchedLibraryPaths.Add(info.LibraryPath);
-                    }
+                    Console.WriteLine($"  listed page {page}, matched-since-date so far: {matched}");
                 }
 
-                Console.WriteLine($"  listed page {page}, matched-since-date so far: {matched}");
+                state.Cursor = cursor;
+                state.BootstrapCompleted = true;
+                Console.WriteLine($"Bootstrap listing done. Matched files since date: {matched}");
             }
-
-            state.Cursor = cursor;
-            state.BootstrapCompleted = true;
-            Console.WriteLine($"Bootstrap listing done. Matched files since date: {matched}");
+            else
+            {
+                Console.WriteLine("Bootstrap(cursor): take latest cursor only — no full library listing.");
+                Console.WriteLine("Only files changed AFTER this moment are published. Re-save '发布' in Eagle to include older items.");
+                state.Cursor = await dbx.GetLatestCursorAsync(rootPath);
+                state.BootstrapCompleted = true;
+                Console.WriteLine("Cursor acquired. This run publishes an empty/current state; later runs are incremental.");
+            }
         }
         else
         {
@@ -130,10 +146,12 @@ public static class DropboxPublishCommand
                         {
                             touchedImageMetaPaths.Add(entry.PathDisplay);
                         }
+
                         if (info.IsLibraryMetadata || info.IsImageMetadata)
                         {
                             touchedLibraryPaths.Add(info.LibraryPath);
                         }
+
                         continue;
                     }
 
