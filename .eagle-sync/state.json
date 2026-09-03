@@ -1,8 +1,8 @@
 {
-  "cursor": null,
-  "rootPath": "/Eagle",
-  "since": "2026-09-01T00:00:00+08:00",
-  "bootstrapCompleted": false,
-  "libraries": {},
-  "images": {}
+  "Cursor": "AAY3GjlZb3Pxe3C6xNzpyX64sOCgZp9n9rR1Dp-F6af2wUDgAD6qlS0Y6RaLuAenhO2i9SPX-2XuMoiYZqKA3eSl-tcQur_llwhfCD5wo9RLdnzpjOMaF4ET7RofL_B5M4VQsWm66yg-Ubny1cuNwUxQCP6TswDQtMn2XHvvMYZDwokpFSh739PD4dzRyhJFNHS0SJYEededzsubu1Exq0Ps",
+  "RootPath": "/Eagle",
+  "Since": "2026-09-01T00:00:00.0000000\u002B08:00",
+  "BootstrapCompleted": true,
+  "Libraries": {},
+  "Images": {}
 }
