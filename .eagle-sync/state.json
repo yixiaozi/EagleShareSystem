@@ -1,5 +1,5 @@
 {
-  "Cursor": "AAYrBhdEkne5czcJ-n75sp_G_nJt14zLljfvtgF7zbJGCK7r8E4i4c-RPAuFCQKO8TW-BcgmjLRYnHRXd3FdA55eVATxDlgnpmWLRSOzI-5ezuKbsm5KdOevDKUcPpIDFag9Jo2R25duYj_P66aikmsKIaMcbFnRBJWOhMQyvnQmJBLx_Cm7be-h0R9V1-s0Wiyx96lqYEmnoEV5tMm9wuwJ",
+  "Cursor": "AAaMcvUFpTrHCR1npKbNqT5CNQnihEtspG_mmFFOPHV33rKMRxzq2-FWwRFu4cvvsgaCw5TFQ4T-XXsrdwx36PykGdyxRDaeTuo49mudTowodSq_wfp_Mv8PKzikFNc_6jk0nsim9U-D9xbOxwZFPHjh-Wqw_NvR-GdATgd3HiulCMyccgoOikKE19YJ1tiMvI4vUqEQwnHYYyI8XGPEM5yk",
   "RootPath": "/Eagle",
   "Since": "2026-09-01T00:00:00.0000000\u002B08:00",
   "BootstrapCompleted": true,
@@ -40,7 +40,8 @@
         "modificationTime": 1776788489451,
         "btime": 1788435003408,
         "mtime": 1788431210372,
-        "lastModified": 1788437429248
+        "lastModified": 1788437429248,
+        "isDeleted": false
       }
     },
     "/Eagle/EagleDemo.library/images/KTJ695FIAVKDF.info/metadata.json": {
@@ -71,7 +72,8 @@
         "modificationTime": 1776788461493,
         "btime": 1776788461464,
         "mtime": 1703067631540,
-        "lastModified": 1788437452551
+        "lastModified": 1788437452551,
+        "isDeleted": false
       }
     }
   }
