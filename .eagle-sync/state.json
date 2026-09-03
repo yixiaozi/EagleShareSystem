@@ -1,5 +1,5 @@
 {
-  "Cursor": "AAZ-lj0Lgeqyay9Zey1KPhl8jW-ix2Ep4CeG_NQlJpPen6PBU2C7Hhffx2BNtQEPU4V1PbpEeZRcfo8JISL1ZrkMJ4KToKVIekMIB8T7JZUrQVyZ9IlZsNJVgAeUqOrGWiaWYHFINHVNRmbQKZ18w373eFWkyp264jcUCg3YFm4gmTG9iSuI7mhGszC3OrkPcie5yM58KB1uwYY8TMqfZVmp",
+  "Cursor": "AAYrBhdEkne5czcJ-n75sp_G_nJt14zLljfvtgF7zbJGCK7r8E4i4c-RPAuFCQKO8TW-BcgmjLRYnHRXd3FdA55eVATxDlgnpmWLRSOzI-5ezuKbsm5KdOevDKUcPpIDFag9Jo2R25duYj_P66aikmsKIaMcbFnRBJWOhMQyvnQmJBLx_Cm7be-h0R9V1-s0Wiyx96lqYEmnoEV5tMm9wuwJ",
   "RootPath": "/Eagle",
   "Since": "2026-09-01T00:00:00.0000000\u002B08:00",
   "BootstrapCompleted": true,
@@ -41,6 +41,37 @@
         "btime": 1788435003408,
         "mtime": 1788431210372,
         "lastModified": 1788437429248
+      }
+    },
+    "/Eagle/EagleDemo.library/images/KTJ695FIAVKDF.info/metadata.json": {
+      "Key": "lib-bb02c06eef:KTJ695FIAVKDF",
+      "LibraryPath": "/Eagle/EagleDemo.library",
+      "LibraryId": "lib-bb02c06eef",
+      "LibraryName": "EagleDemo",
+      "ImageId": "KTJ695FIAVKDF",
+      "MetadataPath": "/Eagle/EagleDemo.library/images/KTJ695FIAVKDF.info/metadata.json",
+      "InfoDirPath": "/Eagle/EagleDemo.library/images/KTJ695FIAVKDF.info",
+      "SourceImagePath": "/Eagle/EagleDemo.library/images/KTJ695FIAVKDF.info/美丽的海洋和天空.jpg",
+      "AssetFileName": "lib-bb02c06eef_KTJ695FIAVKDF.jpg",
+      "Metadata": {
+        "id": "KTJ695FIAVKDF",
+        "name": "美丽的海洋和天空",
+        "ext": "jpg",
+        "size": 447841,
+        "width": 1600,
+        "height": 1068,
+        "folders": [
+          "MO8U0EOCVYX6F"
+        ],
+        "tags": [
+          "发布"
+        ],
+        "url": "http://localhost:801/",
+        "annotation": "这是注释，我想说的话。",
+        "modificationTime": 1776788461493,
+        "btime": 1776788461464,
+        "mtime": 1703067631540,
+        "lastModified": 1788437452551
       }
     }
   }
