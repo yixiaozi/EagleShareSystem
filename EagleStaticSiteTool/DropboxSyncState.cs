@@ -7,6 +7,8 @@ public sealed class DropboxSyncState
     public Dictionary<string, SyncLibraryState> Libraries { get; set; } = new(StringComparer.OrdinalIgnoreCase);
     public Dictionary<string, SyncImageState> Images { get; set; } = new(StringComparer.OrdinalIgnoreCase);
     public Dictionary<string, StagedMediaState> Staged { get; set; } = new(StringComparer.OrdinalIgnoreCase);
+    public HashSet<string> KnownImageIds { get; set; } = new(StringComparer.OrdinalIgnoreCase);
+    public HashSet<string> PendingStageInfoDirs { get; set; } = new(StringComparer.OrdinalIgnoreCase);
 }
 
 public sealed class StagedMediaState

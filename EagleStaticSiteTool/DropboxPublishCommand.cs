@@ -42,6 +42,8 @@ public static class DropboxPublishCommand
         state.RootPath = rootPath;
         state.Since = since.ToString("o");
         state.Staged ??= new Dictionary<string, StagedMediaState>(StringComparer.OrdinalIgnoreCase);
+        state.KnownImageIds ??= new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        state.PendingStageInfoDirs ??= new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
         Console.WriteLine($"Dropbox root: {rootPath}");
         Console.WriteLine($"Since: {since:o}");
@@ -57,6 +59,8 @@ public static class DropboxPublishCommand
 
         var touchedLibraryPaths = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         var touchedImageMetaPaths = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        var touchedSourceMediaPaths = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        var newInfoDirPaths = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         var deletedPaths = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
         // Dropbox cannot "list only files after a date". Listing a huge library takes hours.
@@ -94,6 +98,11 @@ public static class DropboxPublishCommand
                         var info = ParseEaglePath(rootPath, entry.PathDisplay);
                         if (info is null)
                         {
+                            if (TryParseEagleInfoMediaPath(rootPath, entry.PathDisplay, out _, out _))
+                            {
+                                TrackTouchedSourceMedia(entry.PathDisplay, touchedSourceMediaPaths);
+                            }
+
                             continue;
                         }
 
@@ -106,6 +115,7 @@ public static class DropboxPublishCommand
                         {
                             touchedImageMetaPaths.Add(entry.PathDisplay);
                             touchedLibraryPaths.Add(info.LibraryPath);
+                            newInfoDirPaths.Add(info.InfoDirPath!);
                         }
                     }
 
@@ -173,14 +183,29 @@ public static class DropboxPublishCommand
                         continue;
                     }
 
-                    var info = ParseEaglePath(rootPath, entry.PathDisplay);
-                    if (info is null)
+                    if (entry.IsFolder)
                     {
+                        if (TryParseEagleInfoDirPath(rootPath, entry.PathDisplay, out string newInfoDir))
+                        {
+                            newInfoDirPaths.Add(newInfoDir);
+                        }
+
                         continue;
                     }
 
                     if (!entry.IsFile)
                     {
+                        continue;
+                    }
+
+                    var info = ParseEaglePath(rootPath, entry.PathDisplay);
+                    if (info is null)
+                    {
+                        if (TryParseEagleInfoMediaPath(rootPath, entry.PathDisplay, out _, out _))
+                        {
+                            TrackTouchedSourceMedia(entry.PathDisplay, touchedSourceMediaPaths);
+                        }
+
                         continue;
                     }
 
@@ -192,6 +217,10 @@ public static class DropboxPublishCommand
                     {
                         touchedImageMetaPaths.Add(entry.PathDisplay);
                         touchedLibraryPaths.Add(info.LibraryPath);
+                    }
+                    else if (TryParseEagleInfoMediaPath(rootPath, entry.PathDisplay, out _, out _))
+                    {
+                        TrackTouchedSourceMedia(entry.PathDisplay, touchedSourceMediaPaths);
                     }
                 }
 
@@ -239,7 +268,16 @@ public static class DropboxPublishCommand
         int stagedThisRun = 0;
         if (!string.IsNullOrWhiteSpace(stagingPath))
         {
-            foreach (string metaPath in touchedImageMetaPaths.OrderBy(x => x, StringComparer.OrdinalIgnoreCase))
+            var stagingMetaPaths = new HashSet<string>(touchedImageMetaPaths, StringComparer.OrdinalIgnoreCase);
+            foreach (string mediaPath in touchedSourceMediaPaths)
+            {
+                if (TryParseEagleInfoMediaPath(state.RootPath, mediaPath, out string metaFromMedia, out _))
+                {
+                    stagingMetaPaths.Add(metaFromMedia);
+                }
+            }
+
+            foreach (string metaPath in stagingMetaPaths.OrderBy(x => x, StringComparer.OrdinalIgnoreCase))
             {
                 if (deletedPaths.Contains(metaPath))
                 {
@@ -247,7 +285,8 @@ public static class DropboxPublishCommand
                     continue;
                 }
 
-                if (await TryStageMediaAsync(dbx, state, metaPath, stagingPath))
+                if (await TryStageMediaAsync(
+                        dbx, state, metaPath, stagingPath, touchedSourceMediaPaths, newInfoDirPaths))
                 {
                     stagedThisRun++;
                 }
@@ -290,7 +329,9 @@ public static class DropboxPublishCommand
         DropboxApiClient dbx,
         DropboxSyncState state,
         string metadataPath,
-        string stagingRoot)
+        string stagingRoot,
+        IReadOnlySet<string> touchedSourceMediaPaths,
+        IReadOnlySet<string> newInfoDirPaths)
     {
         var info = ParseEaglePath(state.RootPath, metadataPath);
         if (info is null || !info.IsImageMetadata)
@@ -352,6 +393,39 @@ public static class DropboxPublishCommand
             return false;
         }
 
+        string infoDir = info.InfoDirPath!.TrimEnd('/');
+
+        if (state.KnownImageIds.Contains(imageMeta.Id))
+        {
+            Console.WriteLine($"Staging skip (known image, e.g. rename): {metadataPath}");
+            return false;
+        }
+
+        StagedMediaState? stagedByImageId = state.Staged.Values.FirstOrDefault(s =>
+            string.Equals(s.ImageId, imageMeta.Id, StringComparison.OrdinalIgnoreCase));
+        if (stagedByImageId is not null)
+        {
+            state.KnownImageIds.Add(imageMeta.Id);
+            Console.WriteLine($"Staging skip (already staged): {stagedByImageId.StagingPath}");
+            return false;
+        }
+
+        bool isNewInfoDir = newInfoDirPaths.Contains(infoDir) ||
+            state.PendingStageInfoDirs.Contains(infoDir);
+        if (!isNewInfoDir)
+        {
+            state.KnownImageIds.Add(imageMeta.Id);
+            Console.WriteLine($"Staging skip (pre-existing library item): {metadataPath}");
+            return false;
+        }
+
+        if (!touchedSourceMediaPaths.Contains(sourceImage))
+        {
+            state.PendingStageInfoDirs.Add(infoDir);
+            Console.WriteLine($"Staging pending (waiting for source file): {metadataPath}");
+            return false;
+        }
+
         if (state.Staged.TryGetValue(metadataPath, out StagedMediaState? existing) &&
             string.Equals(existing.SourcePath, sourceImage, StringComparison.OrdinalIgnoreCase))
         {
@@ -374,6 +448,8 @@ public static class DropboxPublishCommand
                 StagingPath = copiedPath,
                 StagedAt = DateTimeOffset.UtcNow.ToString("o")
             };
+            state.KnownImageIds.Add(imageMeta.Id);
+            state.PendingStageInfoDirs.Remove(infoDir);
             Console.WriteLine($"Staged: {copiedPath}");
             return true;
         }
@@ -382,6 +458,84 @@ public static class DropboxPublishCommand
             Console.WriteLine($"Staging failed: {metadataPath} -> {targetPath} ({ex.Message})");
             return false;
         }
+    }
+
+    private static void TrackTouchedSourceMedia(string pathDisplay, ISet<string> touchedSourceMediaPaths)
+    {
+        if (IsThumbnailPath(pathDisplay) || !IsImageOrVideo(Path.GetExtension(pathDisplay)))
+        {
+            return;
+        }
+
+        touchedSourceMediaPaths.Add(pathDisplay.Replace('\\', '/'));
+    }
+
+    private static bool TryParseEagleInfoDirPath(string rootPath, string pathDisplay, out string infoDirPath)
+    {
+        infoDirPath = "";
+
+        if (string.IsNullOrWhiteSpace(pathDisplay))
+        {
+            return false;
+        }
+
+        string root = NormalizeRoot(rootPath).TrimEnd('/');
+        string path = pathDisplay.Replace('\\', '/').TrimEnd('/');
+        if (!path.StartsWith(root + "/", StringComparison.OrdinalIgnoreCase))
+        {
+            return false;
+        }
+
+        string relative = path[(root.Length + 1)..];
+        string[] parts = relative.Split('/', StringSplitOptions.RemoveEmptyEntries);
+        if (parts.Length != 3 ||
+            !parts[0].EndsWith(".library", StringComparison.OrdinalIgnoreCase) ||
+            !string.Equals(parts[1], "images", StringComparison.OrdinalIgnoreCase) ||
+            !parts[2].EndsWith(".info", StringComparison.OrdinalIgnoreCase))
+        {
+            return false;
+        }
+
+        infoDirPath = path;
+        return true;
+    }
+
+    private static bool TryParseEagleInfoMediaPath(
+        string rootPath,
+        string pathDisplay,
+        out string metadataPath,
+        out string infoDirPath)
+    {
+        metadataPath = "";
+        infoDirPath = "";
+
+        if (string.IsNullOrWhiteSpace(pathDisplay))
+        {
+            return false;
+        }
+
+        string root = NormalizeRoot(rootPath).TrimEnd('/');
+        string path = pathDisplay.Replace('\\', '/');
+        if (!path.StartsWith(root + "/", StringComparison.OrdinalIgnoreCase))
+        {
+            return false;
+        }
+
+        string relative = path[(root.Length + 1)..];
+        string[] parts = relative.Split('/', StringSplitOptions.RemoveEmptyEntries);
+        if (parts.Length != 4 ||
+            !parts[0].EndsWith(".library", StringComparison.OrdinalIgnoreCase) ||
+            !string.Equals(parts[1], "images", StringComparison.OrdinalIgnoreCase) ||
+            !parts[2].EndsWith(".info", StringComparison.OrdinalIgnoreCase) ||
+            string.Equals(parts[3], "metadata.json", StringComparison.OrdinalIgnoreCase))
+        {
+            return false;
+        }
+
+        string libraryPath = $"{root}/{parts[0]}";
+        infoDirPath = $"{libraryPath}/images/{parts[2]}";
+        metadataPath = $"{infoDirPath}/metadata.json";
+        return true;
     }
 
     private static void RemoveStagedMedia(DropboxSyncState state, string metadataPath)

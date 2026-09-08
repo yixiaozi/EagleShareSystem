@@ -67,7 +67,7 @@ dotnet run --project ./EagleStaticSiteTool -- "D:\Dropbox\MyLib.library" ./Eagle
 | `DROPBOX_APP_SECRET` | Secret | App secret |
 | `DROPBOX_REFRESH_TOKEN` | Secret | 需含 `files.metadata.read`、`files.content.read` |
 | `DROPBOX_LIBRARY_PATH` | Variable/Secret | 库根路径，如 `/Eagle`（会扫描其下所有 `*.library`） |
-| `DROPBOX_STAGING_PATH` | Variable/Secret | 新图片/视频复制到此目录（供 Mac 导入 iCloud），如 `/Eagle/iCloud-Inbox` |
+| `DROPBOX_STAGING_PATH` | Variable/Secret | 新图片/视频复制到此目录（供 Mac 导入 iCloud），如 `/Eagle/iCloud-Inbox`。仅 **新导入** 的素材会 staging；改名（文件名也会变）/改标签等已有素材的变更会跳过 |
 
 可选：`DROPBOX_BOOTSTRAP_MODE=cursor`（默认，只从当前时刻起跟踪）；`since-scan` 会按日期全量列举，大库极慢，不推荐。
 
