@@ -6,6 +6,16 @@ public sealed class DropboxSyncState
     public bool BootstrapCompleted { get; set; }
     public Dictionary<string, SyncLibraryState> Libraries { get; set; } = new(StringComparer.OrdinalIgnoreCase);
     public Dictionary<string, SyncImageState> Images { get; set; } = new(StringComparer.OrdinalIgnoreCase);
+    public Dictionary<string, StagedMediaState> Staged { get; set; } = new(StringComparer.OrdinalIgnoreCase);
+}
+
+public sealed class StagedMediaState
+{
+    public string MetadataPath { get; set; } = "";
+    public string ImageId { get; set; } = "";
+    public string SourcePath { get; set; } = "";
+    public string StagingPath { get; set; } = "";
+    public string StagedAt { get; set; } = "";
 }
 
 public sealed class SyncLibraryState

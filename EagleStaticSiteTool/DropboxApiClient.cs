@@ -178,6 +178,29 @@ public sealed class DropboxApiClient : IDisposable
         }
     }
 
+    public async Task<string> CopyFileAsync(
+        string fromPath,
+        string toPath,
+        bool autorename = true,
+        CancellationToken ct = default)
+    {
+        var payload = new
+        {
+            from_path = NormalizePath(fromPath),
+            to_path = NormalizePath(toPath),
+            autorename
+        };
+
+        using var doc = await PostApiAsync("https://api.dropboxapi.com/2/files/copy_v2", payload, ct);
+        if (doc.RootElement.TryGetProperty("metadata", out JsonElement metadata) &&
+            metadata.TryGetProperty("path_display", out JsonElement pathDisplay))
+        {
+            return pathDisplay.GetString() ?? NormalizePath(toPath);
+        }
+
+        return NormalizePath(toPath);
+    }
+
     private async Task<JsonDocument> PostApiAsync(string url, object payload, CancellationToken ct)
     {
         await EnsureAccessTokenAsync(ct);

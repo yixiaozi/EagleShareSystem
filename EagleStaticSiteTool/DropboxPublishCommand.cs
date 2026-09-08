@@ -25,6 +25,7 @@ public static class DropboxPublishCommand
         string sinceRaw = EnvOrDefault("DROPBOX_SINCE", "2026-09-01T00:00:00+08:00");
         string statePath = Path.GetFullPath(EnvOrDefault("DROPBOX_STATE_PATH", "./.eagle-sync/state.json"));
         string cachePath = Path.GetFullPath(EnvOrDefault("DROPBOX_CACHE_PATH", "./.eagle-sync/cache"));
+        string stagingPath = NormalizeRoot(EnvOrDefault("DROPBOX_STAGING_PATH", ""));
 
         if (!DateTimeOffset.TryParse(sinceRaw, out DateTimeOffset since))
         {
@@ -40,11 +41,16 @@ public static class DropboxPublishCommand
         DropboxSyncState state = LoadState(statePath);
         state.RootPath = rootPath;
         state.Since = since.ToString("o");
+        state.Staged ??= new Dictionary<string, StagedMediaState>(StringComparer.OrdinalIgnoreCase);
 
         Console.WriteLine($"Dropbox root: {rootPath}");
         Console.WriteLine($"Since: {since:o}");
         Console.WriteLine($"Publish tag: {publishTag}");
         Console.WriteLine($"State: {statePath}");
+        if (!string.IsNullOrWhiteSpace(stagingPath))
+        {
+            Console.WriteLine($"Staging path: {stagingPath} (images/videos only)");
+        }
 
         using var dbx = new DropboxApiClient(appKey, appSecret, refreshToken);
         await dbx.EnsureAccessTokenAsync();
@@ -198,6 +204,11 @@ public static class DropboxPublishCommand
         foreach (string deleted in deletedPaths)
         {
             RemoveByDeletedDropboxPath(state, deleted, cachePath);
+            var deletedInfo = ParseEaglePath(state.RootPath, deleted);
+            if (deletedInfo?.IsImageMetadata == true)
+            {
+                RemoveStagedMedia(state, deleted);
+            }
         }
 
         foreach (string libraryPath in touchedLibraryPaths.OrderBy(x => x, StringComparer.OrdinalIgnoreCase))
@@ -225,6 +236,24 @@ public static class DropboxPublishCommand
             await ProcessImageMetadataAsync(dbx, state, metaPath, publishTag, cachePath);
         }
 
+        int stagedThisRun = 0;
+        if (!string.IsNullOrWhiteSpace(stagingPath))
+        {
+            foreach (string metaPath in touchedImageMetaPaths.OrderBy(x => x, StringComparer.OrdinalIgnoreCase))
+            {
+                if (deletedPaths.Contains(metaPath))
+                {
+                    RemoveStagedMedia(state, metaPath);
+                    continue;
+                }
+
+                if (await TryStageMediaAsync(dbx, state, metaPath, stagingPath))
+                {
+                    stagedThisRun++;
+                }
+            }
+        }
+
         // Drop libraries that currently have zero published images.
         foreach (string libraryPath in state.Libraries.Keys.ToList())
         {
@@ -249,7 +278,154 @@ public static class DropboxPublishCommand
 
         Console.WriteLine($"Published images in state: {state.Images.Count}");
         Console.WriteLine($"Libraries in state: {state.Libraries.Count}");
+        if (!string.IsNullOrWhiteSpace(stagingPath))
+        {
+            Console.WriteLine($"Staged media this run: {stagedThisRun}");
+            Console.WriteLine($"Total staged in state: {state.Staged.Count}");
+        }
         return 0;
+    }
+
+    private static async Task<bool> TryStageMediaAsync(
+        DropboxApiClient dbx,
+        DropboxSyncState state,
+        string metadataPath,
+        string stagingRoot)
+    {
+        var info = ParseEaglePath(state.RootPath, metadataPath);
+        if (info is null || !info.IsImageMetadata)
+        {
+            return false;
+        }
+
+        string json;
+        try
+        {
+            json = await dbx.DownloadTextAsync(metadataPath);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Staging skip (metadata missing): {metadataPath} ({ex.Message})");
+            RemoveStagedMedia(state, metadataPath);
+            return false;
+        }
+
+        ImageMetadata? imageMeta;
+        try
+        {
+            imageMeta = JsonSerializer.Deserialize<ImageMetadata>(json, JsonRead);
+        }
+        catch
+        {
+            Console.WriteLine($"Staging skip (invalid metadata): {metadataPath}");
+            return false;
+        }
+
+        if (imageMeta is null || string.IsNullOrWhiteSpace(imageMeta.Id) || imageMeta.IsDeleted)
+        {
+            RemoveStagedMedia(state, metadataPath);
+            return false;
+        }
+
+        if (!IsImageOrVideo(imageMeta.Ext))
+        {
+            Console.WriteLine($"Staging skip (not image/video): {metadataPath} ext={imageMeta.Ext}");
+            return false;
+        }
+
+        var probe = new SyncImageState
+        {
+            ImageId = imageMeta.Id,
+            Metadata = imageMeta,
+            InfoDirPath = info.InfoDirPath!
+        };
+        var (sourceImage, _) = await ResolveSourcePathsAsync(dbx, probe);
+        if (string.IsNullOrWhiteSpace(sourceImage))
+        {
+            Console.WriteLine($"Staging skip (no source file): {metadataPath}");
+            return false;
+        }
+
+        if (IsThumbnailPath(sourceImage))
+        {
+            Console.WriteLine($"Staging skip (thumbnail only): {metadataPath}");
+            return false;
+        }
+
+        if (state.Staged.TryGetValue(metadataPath, out StagedMediaState? existing) &&
+            string.Equals(existing.SourcePath, sourceImage, StringComparison.OrdinalIgnoreCase))
+        {
+            Console.WriteLine($"Staging skip (already staged): {existing.StagingPath}");
+            return false;
+        }
+
+        string safeName = SanitizeDropboxFileName(imageMeta.Name ?? imageMeta.Id);
+        string ext = NormalizeExt(imageMeta.Ext);
+        string targetPath = $"{stagingRoot.TrimEnd('/')}/{safeName}{ext}";
+
+        try
+        {
+            string copiedPath = await dbx.CopyFileAsync(sourceImage, targetPath, autorename: true);
+            state.Staged[metadataPath] = new StagedMediaState
+            {
+                MetadataPath = metadataPath,
+                ImageId = imageMeta.Id,
+                SourcePath = sourceImage,
+                StagingPath = copiedPath,
+                StagedAt = DateTimeOffset.UtcNow.ToString("o")
+            };
+            Console.WriteLine($"Staged: {copiedPath}");
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Staging failed: {metadataPath} -> {targetPath} ({ex.Message})");
+            return false;
+        }
+    }
+
+    private static void RemoveStagedMedia(DropboxSyncState state, string metadataPath)
+    {
+        if (state.Staged.Remove(metadataPath))
+        {
+            Console.WriteLine($"Removed staged record: {metadataPath}");
+        }
+    }
+
+    private static bool IsImageOrVideo(string? ext)
+    {
+        if (string.IsNullOrWhiteSpace(ext))
+        {
+            return false;
+        }
+
+        string normalized = ext.Trim().TrimStart('.').ToLowerInvariant();
+        return normalized is "jpg" or "jpeg" or "png" or "gif" or "webp" or "bmp" or "tif" or "tiff"
+            or "heic" or "heif" or "avif" or "ico" or "raw" or "cr2" or "cr3" or "nef" or "arw" or "dng" or "orf" or "rw2"
+            or "mp4" or "mov" or "mkv" or "avi" or "webm" or "m4v" or "wmv" or "flv" or "mpeg" or "mpg" or "3gp" or "mts";
+    }
+
+    private static bool IsThumbnailPath(string path)
+    {
+        return Path.GetFileName(path).Contains("_thumbnail", StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static string SanitizeDropboxFileName(string name)
+    {
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            return "untitled";
+        }
+
+        var invalid = new HashSet<char>(Path.GetInvalidFileNameChars()) { '/', '\\' };
+        var sb = new StringBuilder(name.Length);
+        foreach (char c in name.Trim())
+        {
+            sb.Append(invalid.Contains(c) || c < 32 ? '_' : c);
+        }
+
+        string result = sb.ToString().Trim().Trim('.');
+        return string.IsNullOrWhiteSpace(result) ? "untitled" : result;
     }
 
     private static async Task EnsureLibraryAsync(DropboxApiClient dbx, DropboxSyncState state, string libraryPath)
