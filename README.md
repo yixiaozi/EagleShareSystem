@@ -110,6 +110,10 @@ dotnet run --project ./EagleStaticSiteTool -- "D:\Dropbox\MyLib.library" ./Eagle
 **列表为什么曾经是原图？**  
 早期同步未带缩略图字段时会回退到原图；当前版本会在同步时补下 `_thumbnail`。
 
+## Mac：新图自动进 iCloud 相册
+
+Action 会把新图片/视频复制到 Dropbox `DROPBOX_STAGING_PATH`（如 `/Share/iCloud-Inbox`）。Mac 上用 [`scripts/icloud-photos-import/`](scripts/icloud-photos-import/README.md) 从 API 下载到 `~/.eagle-sync/staging-inbox` 并导入「照片」，**不使用 Dropbox 本地目录**。
+
 ## 技术栈
 
 - 生成工具：C# / .NET 9
