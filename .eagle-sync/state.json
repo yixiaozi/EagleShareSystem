@@ -1,5 +1,5 @@
 {
-  "Cursor": "AAay7NuCfueTHS6pahbb8VTWA0OR1F5nbHqLnuViJlPOYM7NeJm0byZ_1O4Bih_gR9HoPIS-Yd3obFBKhOvWBziXeO9es_1XqdbaROLAlzPSJ9y_1akIhyd4A9YUKGcq8rFOPkP-E1gdMPbpIxy8eL7U31v2BH-wBIVOLFmAs0obv0tOXQe-BRBLwyAFr-pGfENUMvulUIkZazjLeKSENl1B",
+  "Cursor": "AAYLotVRtQeIVHbFDuJksspWAmt7YIGIAtq9tsr1SYXfwz2HoEYw4w5lA3b63aBWyyM4FaYu3WkGqjG4ScM3pJMXiIwKlIbcpiiucdqIwxutd3xOA_uarDMdYnnnKBd59eoZnFtTwgzGgPib-G7uauc4TZIoyuRCF4vhJTfhco39LhArVhjJVl5kaMGZTCj4_u4DNSZLmUP1BcYeg42l8d4z",
   "RootPath": "/Eagle",
   "Since": "2026-09-01T00:00:00.0000000\u002B08:00",
   "BootstrapCompleted": true,
@@ -323,6 +323,27 @@
       "SourcePath": "/Eagle/yixiaozi.library/images/MTT7QB8U16PHM.info/Clipboard - 2026-09-09 06.00.01.png",
       "StagingPath": "/Share/iCloud-Inbox/Clipboard - 2026-09-09 06.00.01.png",
       "StagedAt": "2026-09-08T22:04:54.6380192\u002B00:00"
+    },
+    "/Eagle/SPO.library/images/MTTH0KAUGR6HQ.info/metadata.json": {
+      "MetadataPath": "/Eagle/SPO.library/images/MTTH0KAUGR6HQ.info/metadata.json",
+      "ImageId": "MTTH0KAUGR6HQ",
+      "SourcePath": "/Eagle/SPO.library/images/MTTH0KAUGR6HQ.info/FY27-MS114.pdf.png",
+      "StagingPath": "/Share/iCloud-Inbox/FY27-MS114.pdf.png",
+      "StagedAt": "2026-09-09T04:02:56.2673412\u002B00:00"
+    },
+    "/Eagle/SPO.library/images/MTTH12FFVQWQE.info/metadata.json": {
+      "MetadataPath": "/Eagle/SPO.library/images/MTTH12FFVQWQE.info/metadata.json",
+      "ImageId": "MTTH12FFVQWQE",
+      "SourcePath": "/Eagle/SPO.library/images/MTTH12FFVQWQE.info/FY27-MS114_年度授权.pdf.png",
+      "StagingPath": "/Share/iCloud-Inbox/FY27-MS114_年度授权.pdf.png",
+      "StagedAt": "2026-09-09T04:02:58.0096940\u002B00:00"
+    },
+    "/Eagle/SPO.library/images/MTTHDOEBATU4F.info/metadata.json": {
+      "MetadataPath": "/Eagle/SPO.library/images/MTTHDOEBATU4F.info/metadata.json",
+      "ImageId": "MTTHDOEBATU4F",
+      "SourcePath": "/Eagle/SPO.library/images/MTTHDOEBATU4F.info/FY27-MS019更2026-09-01.pdf.png",
+      "StagingPath": "/Share/iCloud-Inbox/FY27-MS019更2026-09-01.pdf.png",
+      "StagedAt": "2026-09-09T04:02:59.9031372\u002B00:00"
     }
   },
   "KnownImageIds": [
@@ -460,7 +481,10 @@
     "MTT7LV8QEJ26P",
     "MTT7LV8QJ560L",
     "MTT7MTVGH4Q7B",
-    "MTT7QB8U16PHM"
+    "MTT7QB8U16PHM",
+    "MTTH0KAUGR6HQ",
+    "MTTH12FFVQWQE",
+    "MTTHDOEBATU4F"
   ],
   "PendingStageInfoDirs": []
 }
