@@ -1,5 +1,5 @@
 {
-  "Cursor": "AAaLkztUgLt2Lg3ilEnLAb8aMZOJkK-RQ8zm42MVLXwWQrrDE0aMbWYIzievbCVEy9VdnsKjypalGXxv_67rgtEEWnJrk8CmY0qgt9ZE9r0-jRi2Qn0s0p7SO1k5XE52WeCP_GHR4JkEPBXedu0V44D5zzFf4NW-zo-Zac7vR6zJneI6vYk9KSndDHR3jQfcYsVzoxPqYho53xt0zDzFYOe2",
+  "Cursor": "AAYZuVWTIi6PpmvBFI9iagnjgFEagdwIXUg7-ATkPg2Dh20FgyUZaBQm7gNa6WW7grC5lUS3w5wGsGsevkIs02Pbu9gq4oJ8b1YExpH1w8h-DNFf1aairZLnM5uBJOOxUsQz77bOmpO0sS3flpiX87NhLHpwgI4feMXL6FuJbdfrqSffMeHcDrJsskSlKCIUK4ageSmKtNZm_ILBpa8Thmsy",
   "RootPath": "/Eagle",
   "Since": "2026-09-01T00:00:00.0000000\u002B08:00",
   "BootstrapCompleted": true,
@@ -463,6 +463,27 @@
       "SourcePath": "/Eagle/yixiaozi.library/images/MTXZ43LTE07WJ.info/Clipboard - 2026-09-10 16.40.12.png",
       "StagingPath": "/Share/iCloud-Inbox/Clipboard - 2026-09-10 16.40.12 (1).png",
       "StagedAt": "2026-09-12T10:02:56.7050455\u002B00:00"
+    },
+    "/Eagle/yixiaozi.library/images/MTYZZ8JN82GDN.info/metadata.json": {
+      "MetadataPath": "/Eagle/yixiaozi.library/images/MTYZZ8JN82GDN.info/metadata.json",
+      "ImageId": "MTYZZ8JN82GDN",
+      "SourcePath": "/Eagle/yixiaozi.library/images/MTYZZ8JN82GDN.info/Clipboard - 2026-09-13 07.09.38.png",
+      "StagingPath": "/Share/iCloud-Inbox/Clipboard - 2026-09-13 07.09.38.png",
+      "StagedAt": "2026-09-13T01:18:22.9187664\u002B00:00"
+    },
+    "/Eagle/yixiaozi.library/images/MTZ003LGFK1Y5.info/metadata.json": {
+      "MetadataPath": "/Eagle/yixiaozi.library/images/MTZ003LGFK1Y5.info/metadata.json",
+      "ImageId": "MTZ003LGFK1Y5",
+      "SourcePath": "/Eagle/yixiaozi.library/images/MTZ003LGFK1Y5.info/Clipboard - 2026-09-13 07.10.18.png",
+      "StagingPath": "/Share/iCloud-Inbox/Clipboard - 2026-09-13 07.10.18.png",
+      "StagedAt": "2026-09-13T01:18:24.4551873\u002B00:00"
+    },
+    "/Eagle/yixiaozi.library/images/MTZ00PYQ0YEWY.info/metadata.json": {
+      "MetadataPath": "/Eagle/yixiaozi.library/images/MTZ00PYQ0YEWY.info/metadata.json",
+      "ImageId": "MTZ00PYQ0YEWY",
+      "SourcePath": "/Eagle/yixiaozi.library/images/MTZ00PYQ0YEWY.info/Clipboard - 2026-09-13 07.10.47.png",
+      "StagingPath": "/Share/iCloud-Inbox/Clipboard - 2026-09-13 07.10.47.png",
+      "StagedAt": "2026-09-13T01:18:25.6436791\u002B00:00"
     }
   },
   "KnownImageIds": [
@@ -620,7 +641,10 @@
     "MTWSQ2RR309DH",
     "MTWSQ2RTTSS3W",
     "MTWSQ2RUZJ9GD",
-    "MTXZ43LTE07WJ"
+    "MTXZ43LTE07WJ",
+    "MTYZZ8JN82GDN",
+    "MTZ003LGFK1Y5",
+    "MTZ00PYQ0YEWY"
   ],
   "PendingStageInfoDirs": []
 }
