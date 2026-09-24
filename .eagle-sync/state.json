@@ -1,5 +1,5 @@
 {
-  "Cursor": "AAasGDKjKSFUtKGvYIr29ESUpCtvwqUeJtnCw0UOY3WFEfKnLRsEV7E11MtXcnG-uc-urhu5PTbSn0PN_p5gnv6UniGprsWsb2NaUPaIAPEwuW4xrWHe5Gf0OGW7M4OPRH4X1dn7Cx4sRAmnAFdE9vIJKpa8VT8kwzVplwoZJOu0pS5IXP0FREtw7u_NV5bp9ZUlItkaDvCqoTvKoQDEeGPm",
+  "Cursor": "AAa4UUR2-LJ23BK2l8FVSu8-muviRZ2RPDYFXTk9E2vqXOsUa8Z9JubJx5avZEnudo7jFre0ZnOrfePEWRBHdcgsPbhcSawxSFiqqNMYxgsc6ysrw4pd_3DIoGTXC4eTKNWFFRLpTbhXX4BCrPXvW3Ap_Ei1bfo_G3c_O6u0oAn-ZrPxFSctU3ls317TfH87kVLO1RljzSVCKHg1SZ2PW799",
   "RootPath": "/Eagle",
   "Since": "2026-09-01T00:00:00.0000000\u002B08:00",
   "BootstrapCompleted": true,
@@ -624,6 +624,13 @@
       "SourcePath": "/Eagle/公司电脑个人库.library/images/MUCQZ3LDTUTBD.info/Clipboard - 2026-09-22 22.06.21.png",
       "StagingPath": "/Share/iCloud-Inbox/Clipboard - 2026-09-22 22.06.21.png",
       "StagedAt": "2026-09-22T22:02:39.7158897\u002B00:00"
+    },
+    "/Eagle/公司电脑个人库.library/images/MUEVYX6IVW8T5.info/metadata.json": {
+      "MetadataPath": "/Eagle/公司电脑个人库.library/images/MUEVYX6IVW8T5.info/metadata.json",
+      "ImageId": "MUEVYX6IVW8T5",
+      "SourcePath": "/Eagle/公司电脑个人库.library/images/MUEVYX6IVW8T5.info/Clipboard - 2026-09-24 10.01.44.png",
+      "StagingPath": "/Share/iCloud-Inbox/Clipboard - 2026-09-24 10.01.44.png",
+      "StagedAt": "2026-09-24T04:03:13.0844089\u002B00:00"
     }
   },
   "KnownImageIds": [
@@ -810,7 +817,8 @@
     "MUCML1X0KO05F",
     "MUCMYKRT26M78",
     "MUCNNM52I1KOP",
-    "MUCQZ3LDTUTBD"
+    "MUCQZ3LDTUTBD",
+    "MUEVYX6IVW8T5"
   ],
   "PendingStageInfoDirs": []
 }
