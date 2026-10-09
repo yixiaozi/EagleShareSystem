@@ -1,5 +1,5 @@
 {
-  "Cursor": "AAZZsvYd1nhy67nH2cBksp4WgqZKQoUfX52lqjvJ6OXiMUeJvykpUGyclCBYlfTkOKL9ALzfPXOTv4XNWkpWEzWA46pct_x4hUFNe1QPzVxid1SG6hJHUZsch7ssctM-bE2jYUb6yBtaEMrFfmuHkgtlUyXaXi90PZepAP0BSrOeXEkbddVzeJO_PLade7uxi-Xi_RTR5zRCc2wmsG-fOgoo",
+  "Cursor": "AAa9dPi-oGEe-v9GrAFhwQAkVJR6bHzpkulj94_OduK4aSlkve13cwyX5VINFfrVwlgiLvxkxM-4moUWxq_fPzoLVXUbupDuFwFoCCA51obIDuYufA5aSVk6ESoCcCgYWkc1XuqXz-Ah1Ex_9XgqviEszghKjtUgFQoQ0OgZof5Od44pcHZH2cdMqgGLN4R5uN-O-myphcjkQOgICpFs-xgz",
   "RootPath": "/Eagle",
   "Since": "2026-09-01T00:00:00.0000000\u002B08:00",
   "BootstrapCompleted": true,
@@ -644,41 +644,6 @@
       "StagingPath": "/Share/iCloud-Inbox/Clipboard - 2026-09-22 20.03.28.png",
       "StagedAt": "2026-09-22T22:02:33.6393525\u002B00:00"
     },
-    "/Eagle/公司电脑个人库.library/images/MUCMYKRT26M78.info/metadata.json": {
-      "MetadataPath": "/Eagle/公司电脑个人库.library/images/MUCMYKRT26M78.info/metadata.json",
-      "ImageId": "MUCMYKRT26M78",
-      "SourcePath": "/Eagle/公司电脑个人库.library/images/MUCMYKRT26M78.info/Clipboard - 2026-09-22 20.13.59.png",
-      "StagingPath": "/Share/iCloud-Inbox/Clipboard - 2026-09-22 20.13.59.png",
-      "StagedAt": "2026-09-22T22:02:35.8056867\u002B00:00"
-    },
-    "/Eagle/公司电脑个人库.library/images/MUCNNM52I1KOP.info/metadata.json": {
-      "MetadataPath": "/Eagle/公司电脑个人库.library/images/MUCNNM52I1KOP.info/metadata.json",
-      "ImageId": "MUCNNM52I1KOP",
-      "SourcePath": "/Eagle/公司电脑个人库.library/images/MUCNNM52I1KOP.info/Clipboard - 2026-09-22 20.33.27.png",
-      "StagingPath": "/Share/iCloud-Inbox/Clipboard - 2026-09-22 20.33.27.png",
-      "StagedAt": "2026-09-22T22:02:37.6366699\u002B00:00"
-    },
-    "/Eagle/公司电脑个人库.library/images/MUCQZ3LDTUTBD.info/metadata.json": {
-      "MetadataPath": "/Eagle/公司电脑个人库.library/images/MUCQZ3LDTUTBD.info/metadata.json",
-      "ImageId": "MUCQZ3LDTUTBD",
-      "SourcePath": "/Eagle/公司电脑个人库.library/images/MUCQZ3LDTUTBD.info/Clipboard - 2026-09-22 22.06.21.png",
-      "StagingPath": "/Share/iCloud-Inbox/Clipboard - 2026-09-22 22.06.21.png",
-      "StagedAt": "2026-09-22T22:02:39.7158897\u002B00:00"
-    },
-    "/Eagle/公司电脑个人库.library/images/MUEVYX6IVW8T5.info/metadata.json": {
-      "MetadataPath": "/Eagle/公司电脑个人库.library/images/MUEVYX6IVW8T5.info/metadata.json",
-      "ImageId": "MUEVYX6IVW8T5",
-      "SourcePath": "/Eagle/公司电脑个人库.library/images/MUEVYX6IVW8T5.info/Clipboard - 2026-09-24 10.01.44.png",
-      "StagingPath": "/Share/iCloud-Inbox/Clipboard - 2026-09-24 10.01.44.png",
-      "StagedAt": "2026-09-24T04:03:13.0844089\u002B00:00"
-    },
-    "/Eagle/公司电脑个人库.library/images/MUF9ZKD5AN7ZN.info/metadata.json": {
-      "MetadataPath": "/Eagle/公司电脑个人库.library/images/MUF9ZKD5AN7ZN.info/metadata.json",
-      "ImageId": "MUF9ZKD5AN7ZN",
-      "SourcePath": "/Eagle/公司电脑个人库.library/images/MUF9ZKD5AN7ZN.info/Clipboard - 2026-09-24 16.34.08.png",
-      "StagingPath": "/Share/iCloud-Inbox/Clipboard - 2026-09-24 16.34.08.png",
-      "StagedAt": "2026-09-24T10:02:48.7832706\u002B00:00"
-    },
     "/Eagle/yixiaozi.library/images/MULUMGGC2JEXN.info/metadata.json": {
       "MetadataPath": "/Eagle/yixiaozi.library/images/MULUMGGC2JEXN.info/metadata.json",
       "ImageId": "MULUMGGC2JEXN",
@@ -860,6 +825,13 @@
       "SourcePath": "/Eagle/yixiaozi.library/images/MUOHSAJ9B3FI7.info/xhys02.png",
       "StagingPath": "/Share/iCloud-Inbox/xhys02.png",
       "StagedAt": "2026-09-30T22:03:57.4654820\u002B00:00"
+    },
+    "/Eagle/SPO.library/images/MUKO9AOH9GUDP.info/metadata.json": {
+      "MetadataPath": "/Eagle/SPO.library/images/MUKO9AOH9GUDP.info/metadata.json",
+      "ImageId": "MUKO9AOH9GUDP",
+      "SourcePath": "/Eagle/SPO.library/images/MUKO9AOH9GUDP.info/IOGraphica - 23 小时 (从 10-00 2026年9月16日 到 9-16 2026年9月17日).png",
+      "StagingPath": "/Share/iCloud-Inbox/IOGraphica - 23 小时 (从 10-00 2026年9月16日 到 9-16 2026年9月17日).png",
+      "StagedAt": "2026-10-09T04:04:55.3387777\u002B00:00"
     }
   },
   "KnownImageIds": [
@@ -1074,7 +1046,9 @@
     "MUOHS82I0XIUB",
     "MUOHSA5UO8CPJ",
     "MUOHSAFUNL1WI",
-    "MUOHSAJ9B3FI7"
+    "MUOHSAJ9B3FI7",
+    "MUKO9AOH9GUDP",
+    "MQES0Y40VPBOZ"
   ],
   "PendingStageInfoDirs": []
 }
