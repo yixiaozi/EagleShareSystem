@@ -1,5 +1,5 @@
 {
-  "Cursor": "AAZMBlfM_Q4IMmcKGZmk8J5lANtAa_FXob2ZxYILvKwvNpfRhe7MkXKktLSuiIeL416gz-K826H9gmMmrTDAdvVQVVSDya5RsLGbn--Ree3HBZiaLnlnPCyC68JjTTqYklUrq1xVm4UwbKb_Nr1RxIxIRtopMnXwwmdSyGv2Q4MDnJQFt-4olETPle0tYQMy9rWNcwvt64S6HJDpLIbMAkrh",
+  "Cursor": "AAbmMHv5DgoKTIbvP7xEYnnA4Z_S7AGUgBaPSl-f81TNGO4FgvZDzSIxdHq8rzx34BANMQcfFocbgiwWx8d8uFOxfE0R7HW48_CIQLif3zYxL2q07vgtGiN1-SW48AOOyVE7JrB4rlbWgp2cGJpk1SBh6UOAupIcfd_-6BhMwWn1lC8V_miKep4i6jfT2SKMUo5vJVAG689igxaLYjFN2Px3",
   "RootPath": "/Eagle",
   "Since": "2026-09-01T00:00:00.0000000\u002B08:00",
   "BootstrapCompleted": true,
@@ -6032,6 +6032,195 @@
       "SourcePath": "/Eagle/yixiaozi.library/images/MVVD2NAHF66CZ.info/IMG_1532.png",
       "StagingPath": "/Share/iCloud-Inbox/IMG_1532.png",
       "StagedAt": "2026-10-30T22:43:45.8733029\u002B00:00"
+    },
+    "/Eagle/yixiaozi.library/images/MVZZU4F2ZB2CY.info/metadata.json": {
+      "MetadataPath": "/Eagle/yixiaozi.library/images/MVZZU4F2ZB2CY.info/metadata.json",
+      "ImageId": "MVZZU4F2ZB2CY",
+      "SourcePath": "/Eagle/yixiaozi.library/images/MVZZU4F2ZB2CY.info/CF130B3C-1165-4780-A526-E725EA3ABA16_1_105_c.jpg",
+      "StagingPath": "/Share/iCloud-Inbox/CF130B3C-1165-4780-A526-E725EA3ABA16_1_105_c.jpg",
+      "StagedAt": "2026-11-03T04:02:40.7656760\u002B00:00"
+    },
+    "/Eagle/yixiaozi.library/images/MVZZU4F339HGR.info/metadata.json": {
+      "MetadataPath": "/Eagle/yixiaozi.library/images/MVZZU4F339HGR.info/metadata.json",
+      "ImageId": "MVZZU4F339HGR",
+      "SourcePath": "/Eagle/yixiaozi.library/images/MVZZU4F339HGR.info/73D8F465-D067-4BB5-A08A-9F63AA78AAE8_1_105_c.jpg",
+      "StagingPath": "/Share/iCloud-Inbox/73D8F465-D067-4BB5-A08A-9F63AA78AAE8_1_105_c.jpg",
+      "StagedAt": "2026-11-03T04:02:43.8675667\u002B00:00"
+    },
+    "/Eagle/yixiaozi.library/images/MVZZU4F3S0LPB.info/metadata.json": {
+      "MetadataPath": "/Eagle/yixiaozi.library/images/MVZZU4F3S0LPB.info/metadata.json",
+      "ImageId": "MVZZU4F3S0LPB",
+      "SourcePath": "/Eagle/yixiaozi.library/images/MVZZU4F3S0LPB.info/D3C50D9C-A9D3-4C74-A2D6-EE05291DB189_1_105_c.jpg",
+      "StagingPath": "/Share/iCloud-Inbox/D3C50D9C-A9D3-4C74-A2D6-EE05291DB189_1_105_c.jpg",
+      "StagedAt": "2026-11-03T04:02:45.9128735\u002B00:00"
+    },
+    "/Eagle/yixiaozi.library/images/MVZZU4F41Y7NJ.info/metadata.json": {
+      "MetadataPath": "/Eagle/yixiaozi.library/images/MVZZU4F41Y7NJ.info/metadata.json",
+      "ImageId": "MVZZU4F41Y7NJ",
+      "SourcePath": "/Eagle/yixiaozi.library/images/MVZZU4F41Y7NJ.info/8A733213-F496-4B35-A31E-773259FDFA1F_1_105_c.jpg",
+      "StagingPath": "/Share/iCloud-Inbox/8A733213-F496-4B35-A31E-773259FDFA1F_1_105_c.jpg",
+      "StagedAt": "2026-11-03T04:02:47.7192533\u002B00:00"
+    },
+    "/Eagle/yixiaozi.library/images/MVZZU4F4EAFTL.info/metadata.json": {
+      "MetadataPath": "/Eagle/yixiaozi.library/images/MVZZU4F4EAFTL.info/metadata.json",
+      "ImageId": "MVZZU4F4EAFTL",
+      "SourcePath": "/Eagle/yixiaozi.library/images/MVZZU4F4EAFTL.info/3DC4F697-68FB-4FE0-954A-F2A3A59A3984_1_105_c.jpg",
+      "StagingPath": "/Share/iCloud-Inbox/3DC4F697-68FB-4FE0-954A-F2A3A59A3984_1_105_c.jpg",
+      "StagedAt": "2026-11-03T04:02:49.6131388\u002B00:00"
+    },
+    "/Eagle/yixiaozi.library/images/MVZZU4F4MY5TI.info/metadata.json": {
+      "MetadataPath": "/Eagle/yixiaozi.library/images/MVZZU4F4MY5TI.info/metadata.json",
+      "ImageId": "MVZZU4F4MY5TI",
+      "SourcePath": "/Eagle/yixiaozi.library/images/MVZZU4F4MY5TI.info/AF412B6C-649B-4FDC-8AFC-A6ABB2083280_1_105_c.jpg",
+      "StagingPath": "/Share/iCloud-Inbox/AF412B6C-649B-4FDC-8AFC-A6ABB2083280_1_105_c.jpg",
+      "StagedAt": "2026-11-03T04:02:51.6059514\u002B00:00"
+    },
+    "/Eagle/yixiaozi.library/images/MVZZU4F4UP3C5.info/metadata.json": {
+      "MetadataPath": "/Eagle/yixiaozi.library/images/MVZZU4F4UP3C5.info/metadata.json",
+      "ImageId": "MVZZU4F4UP3C5",
+      "SourcePath": "/Eagle/yixiaozi.library/images/MVZZU4F4UP3C5.info/7E8653C2-BD13-4603-8CCB-846A8FCB94BA_1_105_c.jpg",
+      "StagingPath": "/Share/iCloud-Inbox/7E8653C2-BD13-4603-8CCB-846A8FCB94BA_1_105_c.jpg",
+      "StagedAt": "2026-11-03T04:02:53.3858999\u002B00:00"
+    },
+    "/Eagle/yixiaozi.library/images/MVZZU4F4VL3UG.info/metadata.json": {
+      "MetadataPath": "/Eagle/yixiaozi.library/images/MVZZU4F4VL3UG.info/metadata.json",
+      "ImageId": "MVZZU4F4VL3UG",
+      "SourcePath": "/Eagle/yixiaozi.library/images/MVZZU4F4VL3UG.info/90BAE3B0-3FC2-4F70-91A4-46556B8CB8D2_1_105_c.jpg",
+      "StagingPath": "/Share/iCloud-Inbox/90BAE3B0-3FC2-4F70-91A4-46556B8CB8D2_1_105_c.jpg",
+      "StagedAt": "2026-11-03T04:02:55.5059540\u002B00:00"
+    },
+    "/Eagle/yixiaozi.library/images/MVZZV7URMK2S6.info/metadata.json": {
+      "MetadataPath": "/Eagle/yixiaozi.library/images/MVZZV7URMK2S6.info/metadata.json",
+      "ImageId": "MVZZV7URMK2S6",
+      "SourcePath": "/Eagle/yixiaozi.library/images/MVZZV7URMK2S6.info/1BFACE92-0715-47EE-BF77-D7282DE72DA2_1_105_c.jpg",
+      "StagingPath": "/Share/iCloud-Inbox/1BFACE92-0715-47EE-BF77-D7282DE72DA2_1_105_c.jpg",
+      "StagedAt": "2026-11-03T04:02:57.2674310\u002B00:00"
+    },
+    "/Eagle/yixiaozi.library/images/MVZZV7UT2PIH8.info/metadata.json": {
+      "MetadataPath": "/Eagle/yixiaozi.library/images/MVZZV7UT2PIH8.info/metadata.json",
+      "ImageId": "MVZZV7UT2PIH8",
+      "SourcePath": "/Eagle/yixiaozi.library/images/MVZZV7UT2PIH8.info/BF4A3CCD-4407-4025-AA5E-3B708374F95E_1_105_c.jpg",
+      "StagingPath": "/Share/iCloud-Inbox/BF4A3CCD-4407-4025-AA5E-3B708374F95E_1_105_c.jpg",
+      "StagedAt": "2026-11-03T04:02:59.3093077\u002B00:00"
+    },
+    "/Eagle/yixiaozi.library/images/MVZZV7UTR9TLN.info/metadata.json": {
+      "MetadataPath": "/Eagle/yixiaozi.library/images/MVZZV7UTR9TLN.info/metadata.json",
+      "ImageId": "MVZZV7UTR9TLN",
+      "SourcePath": "/Eagle/yixiaozi.library/images/MVZZV7UTR9TLN.info/9D39D4B7-2151-4D07-9D3C-E3C7784F6012_1_105_c.jpg",
+      "StagingPath": "/Share/iCloud-Inbox/9D39D4B7-2151-4D07-9D3C-E3C7784F6012_1_105_c.jpg",
+      "StagedAt": "2026-11-03T04:03:01.0467626\u002B00:00"
+    },
+    "/Eagle/yixiaozi.library/images/MVZZV7UUVPSQ1.info/metadata.json": {
+      "MetadataPath": "/Eagle/yixiaozi.library/images/MVZZV7UUVPSQ1.info/metadata.json",
+      "ImageId": "MVZZV7UUVPSQ1",
+      "SourcePath": "/Eagle/yixiaozi.library/images/MVZZV7UUVPSQ1.info/0534B4ED-F34E-48CF-87E6-F692AFC04602_4_5005_c.jpg",
+      "StagingPath": "/Share/iCloud-Inbox/0534B4ED-F34E-48CF-87E6-F692AFC04602_4_5005_c.jpg",
+      "StagedAt": "2026-11-03T04:03:03.1426378\u002B00:00"
+    },
+    "/Eagle/yixiaozi.library/images/MVZZWBR1I1SCY.info/metadata.json": {
+      "MetadataPath": "/Eagle/yixiaozi.library/images/MVZZWBR1I1SCY.info/metadata.json",
+      "ImageId": "MVZZWBR1I1SCY",
+      "SourcePath": "/Eagle/yixiaozi.library/images/MVZZWBR1I1SCY.info/393.jpeg.jpg",
+      "StagingPath": "/Share/iCloud-Inbox/393.jpeg.jpg",
+      "StagedAt": "2026-11-03T04:03:04.8555521\u002B00:00"
+    },
+    "/Eagle/yixiaozi.library/images/MVZZWBR3FOHNK.info/metadata.json": {
+      "MetadataPath": "/Eagle/yixiaozi.library/images/MVZZWBR3FOHNK.info/metadata.json",
+      "ImageId": "MVZZWBR3FOHNK",
+      "SourcePath": "/Eagle/yixiaozi.library/images/MVZZWBR3FOHNK.info/106.jpeg.jpg",
+      "StagingPath": "/Share/iCloud-Inbox/106.jpeg.jpg",
+      "StagedAt": "2026-11-03T04:03:06.8418211\u002B00:00"
+    },
+    "/Eagle/yixiaozi.library/images/MVZZWBR3HRM92.info/metadata.json": {
+      "MetadataPath": "/Eagle/yixiaozi.library/images/MVZZWBR3HRM92.info/metadata.json",
+      "ImageId": "MVZZWBR3HRM92",
+      "SourcePath": "/Eagle/yixiaozi.library/images/MVZZWBR3HRM92.info/90.jpeg.jpg",
+      "StagingPath": "/Share/iCloud-Inbox/90.jpeg.jpg",
+      "StagedAt": "2026-11-03T04:03:08.5292905\u002B00:00"
+    },
+    "/Eagle/yixiaozi.library/images/MVZZWBR3QPKIV.info/metadata.json": {
+      "MetadataPath": "/Eagle/yixiaozi.library/images/MVZZWBR3QPKIV.info/metadata.json",
+      "ImageId": "MVZZWBR3QPKIV",
+      "SourcePath": "/Eagle/yixiaozi.library/images/MVZZWBR3QPKIV.info/65.jpeg.jpg",
+      "StagingPath": "/Share/iCloud-Inbox/65.jpeg.jpg",
+      "StagedAt": "2026-11-03T04:03:10.1859973\u002B00:00"
+    },
+    "/Eagle/yixiaozi.library/images/MVZZWBR49QQYB.info/metadata.json": {
+      "MetadataPath": "/Eagle/yixiaozi.library/images/MVZZWBR49QQYB.info/metadata.json",
+      "ImageId": "MVZZWBR49QQYB",
+      "SourcePath": "/Eagle/yixiaozi.library/images/MVZZWBR49QQYB.info/e6601f0465bd07c3d64aae05acc894.jpeg.jpg",
+      "StagingPath": "/Share/iCloud-Inbox/e6601f0465bd07c3d64aae05acc894.jpeg.jpg",
+      "StagedAt": "2026-11-03T04:03:12.5987942\u002B00:00"
+    },
+    "/Eagle/yixiaozi.library/images/MVZZWBR4V0UD5.info/metadata.json": {
+      "MetadataPath": "/Eagle/yixiaozi.library/images/MVZZWBR4V0UD5.info/metadata.json",
+      "ImageId": "MVZZWBR4V0UD5",
+      "SourcePath": "/Eagle/yixiaozi.library/images/MVZZWBR4V0UD5.info/5d8c2f962edc0e6520da65197b52d7e7.jpeg.jpg",
+      "StagingPath": "/Share/iCloud-Inbox/5d8c2f962edc0e6520da65197b52d7e7.jpeg.jpg",
+      "StagedAt": "2026-11-03T04:03:15.1718699\u002B00:00"
+    },
+    "/Eagle/yixiaozi.library/images/MVZZWBR59Q6ER.info/metadata.json": {
+      "MetadataPath": "/Eagle/yixiaozi.library/images/MVZZWBR59Q6ER.info/metadata.json",
+      "ImageId": "MVZZWBR59Q6ER",
+      "SourcePath": "/Eagle/yixiaozi.library/images/MVZZWBR59Q6ER.info/d915fc19bf9d20ea2348c07d02fc69.jpeg.jpg",
+      "StagingPath": "/Share/iCloud-Inbox/d915fc19bf9d20ea2348c07d02fc69.jpeg.jpg",
+      "StagedAt": "2026-11-03T04:03:16.8707698\u002B00:00"
+    },
+    "/Eagle/yixiaozi.library/images/MVZZWBR5GGWIU.info/metadata.json": {
+      "MetadataPath": "/Eagle/yixiaozi.library/images/MVZZWBR5GGWIU.info/metadata.json",
+      "ImageId": "MVZZWBR5GGWIU",
+      "SourcePath": "/Eagle/yixiaozi.library/images/MVZZWBR5GGWIU.info/2dbd9a2c43ceaf1ffffb25668adcbf.jpeg.jpg",
+      "StagingPath": "/Share/iCloud-Inbox/2dbd9a2c43ceaf1ffffb25668adcbf.jpeg.jpg",
+      "StagedAt": "2026-11-03T04:03:18.8272646\u002B00:00"
+    },
+    "/Eagle/yixiaozi.library/images/MVZZWYKBZ0KYM.info/metadata.json": {
+      "MetadataPath": "/Eagle/yixiaozi.library/images/MVZZWYKBZ0KYM.info/metadata.json",
+      "ImageId": "MVZZWYKBZ0KYM",
+      "SourcePath": "/Eagle/yixiaozi.library/images/MVZZWYKBZ0KYM.info/939ee47387e070aa32c71b2ab0a2ee.jpeg.jpg",
+      "StagingPath": "/Share/iCloud-Inbox/939ee47387e070aa32c71b2ab0a2ee.jpeg.jpg",
+      "StagedAt": "2026-11-03T04:03:20.5222134\u002B00:00"
+    },
+    "/Eagle/yixiaozi.library/images/MVZZWYKEQNYSP.info/metadata.json": {
+      "MetadataPath": "/Eagle/yixiaozi.library/images/MVZZWYKEQNYSP.info/metadata.json",
+      "ImageId": "MVZZWYKEQNYSP",
+      "SourcePath": "/Eagle/yixiaozi.library/images/MVZZWYKEQNYSP.info/d28d543cc55b4fcc58a285b878d7b8.jpeg.jpg",
+      "StagingPath": "/Share/iCloud-Inbox/d28d543cc55b4fcc58a285b878d7b8.jpeg.jpg",
+      "StagedAt": "2026-11-03T04:03:22.5250314\u002B00:00"
+    },
+    "/Eagle/yixiaozi.library/images/MVZZWYKER1FKJ.info/metadata.json": {
+      "MetadataPath": "/Eagle/yixiaozi.library/images/MVZZWYKER1FKJ.info/metadata.json",
+      "ImageId": "MVZZWYKER1FKJ",
+      "SourcePath": "/Eagle/yixiaozi.library/images/MVZZWYKER1FKJ.info/9b1a81cdcd410609c16d18c49aaf54.jpeg.jpg",
+      "StagingPath": "/Share/iCloud-Inbox/9b1a81cdcd410609c16d18c49aaf54.jpeg.jpg",
+      "StagedAt": "2026-11-03T04:03:24.1543108\u002B00:00"
+    },
+    "/Eagle/yixiaozi.library/images/MVZZWYKFLPSN5.info/metadata.json": {
+      "MetadataPath": "/Eagle/yixiaozi.library/images/MVZZWYKFLPSN5.info/metadata.json",
+      "ImageId": "MVZZWYKFLPSN5",
+      "SourcePath": "/Eagle/yixiaozi.library/images/MVZZWYKFLPSN5.info/5c09bfeaf014e5b901c1bf0956431f.jpeg.jpg",
+      "StagingPath": "/Share/iCloud-Inbox/5c09bfeaf014e5b901c1bf0956431f.jpeg.jpg",
+      "StagedAt": "2026-11-03T04:03:26.1835423\u002B00:00"
+    },
+    "/Eagle/yixiaozi.library/images/MVZZWYKYKEURP.info/metadata.json": {
+      "MetadataPath": "/Eagle/yixiaozi.library/images/MVZZWYKYKEURP.info/metadata.json",
+      "ImageId": "MVZZWYKYKEURP",
+      "SourcePath": "/Eagle/yixiaozi.library/images/MVZZWYKYKEURP.info/f5a561df211098d52c56f0bdee3b52_livephoto.tiff",
+      "StagingPath": "/Share/iCloud-Inbox/f5a561df211098d52c56f0bdee3b52_livephoto.tiff",
+      "StagedAt": "2026-11-03T04:03:27.9702008\u002B00:00"
+    },
+    "/Eagle/yixiaozi.library/images/MVZZWYKYLQSTC.info/metadata.json": {
+      "MetadataPath": "/Eagle/yixiaozi.library/images/MVZZWYKYLQSTC.info/metadata.json",
+      "ImageId": "MVZZWYKYLQSTC",
+      "SourcePath": "/Eagle/yixiaozi.library/images/MVZZWYKYLQSTC.info/dccfdaaaf4650b5df5931469dc393b.jpeg.jpg",
+      "StagingPath": "/Share/iCloud-Inbox/dccfdaaaf4650b5df5931469dc393b.jpeg.jpg",
+      "StagedAt": "2026-11-03T04:03:29.7334491\u002B00:00"
+    },
+    "/Eagle/yixiaozi.library/images/MW006JD29H1BQ.info/metadata.json": {
+      "MetadataPath": "/Eagle/yixiaozi.library/images/MW006JD29H1BQ.info/metadata.json",
+      "ImageId": "MW006JD29H1BQ",
+      "SourcePath": "/Eagle/yixiaozi.library/images/MW006JD29H1BQ.info/C6A76986-EB15-4BB7-9AA6-08E454D8B733.jpeg.jpg",
+      "StagingPath": "/Share/iCloud-Inbox/C6A76986-EB15-4BB7-9AA6-08E454D8B733.jpeg.jpg",
+      "StagedAt": "2026-11-03T04:03:31.3740596\u002B00:00"
     }
   },
   "KnownImageIds": [
@@ -7123,7 +7312,34 @@
     "MVVD2NA9GQJDI",
     "MVVD2NAGJL1JM",
     "MVVD2NAGS1RP0",
-    "MVVD2NAHF66CZ"
+    "MVVD2NAHF66CZ",
+    "MVZZU4F2ZB2CY",
+    "MVZZU4F339HGR",
+    "MVZZU4F3S0LPB",
+    "MVZZU4F41Y7NJ",
+    "MVZZU4F4EAFTL",
+    "MVZZU4F4MY5TI",
+    "MVZZU4F4UP3C5",
+    "MVZZU4F4VL3UG",
+    "MVZZV7URMK2S6",
+    "MVZZV7UT2PIH8",
+    "MVZZV7UTR9TLN",
+    "MVZZV7UUVPSQ1",
+    "MVZZWBR1I1SCY",
+    "MVZZWBR3FOHNK",
+    "MVZZWBR3HRM92",
+    "MVZZWBR3QPKIV",
+    "MVZZWBR49QQYB",
+    "MVZZWBR4V0UD5",
+    "MVZZWBR59Q6ER",
+    "MVZZWBR5GGWIU",
+    "MVZZWYKBZ0KYM",
+    "MVZZWYKEQNYSP",
+    "MVZZWYKER1FKJ",
+    "MVZZWYKFLPSN5",
+    "MVZZWYKYKEURP",
+    "MVZZWYKYLQSTC",
+    "MW006JD29H1BQ"
   ],
   "PendingStageInfoDirs": []
 }
