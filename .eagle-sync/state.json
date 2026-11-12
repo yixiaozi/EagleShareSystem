@@ -1,5 +1,5 @@
 {
-  "Cursor": "AAYze6tu6cn6MoOJpk1Pn5gYwS0KfhA6jzZpR7mTJ0pW2RMwhUe9nYzCT4yve3ECTpxjvDFz8E2M2788lrvZobL5tcp7T8yWbO2zyIlcS0S1QJI1kKfbTqW7q-uXBU7n53rXBU1LH64lnyz5aRuRANnl3dkQNVgBpQu3W8SudeloiLdtGn3aVUlaNbhyFAJX1wO-2raG7H-yLupUgPlB-3XQ",
+  "Cursor": "AAZu354lm4T96iACl-K05iMknnSIj35OBABpcTdCOKbn5ICZplXXXCO7oy-PbajRC5Pr_gPcy4AXEpUrMQKdvLZowIIx-Wpt_pYYz7xUOmB34JDgWJCUCys7g3_kxIYsd9UzkFP7CcGWFjdylRxPSFoQ1Dxpu7hWEfD8GVyXN6s1C4he5kJDB2X9myHLS2d7yBsVRADA-QLWJ1Oux6Pab2Zl",
   "RootPath": "/Eagle",
   "Since": "2026-09-01T00:00:00.0000000\u002B08:00",
   "BootstrapCompleted": true,
@@ -6326,6 +6326,13 @@
       "SourcePath": "/Eagle/yixiaozi.library/images/MWC7C4LRWU3ZC.info/2027年以后，你要活成这个样子3.jpg",
       "StagingPath": "/Share/iCloud-Inbox/2027年以后，你要活成这个样子3.jpg",
       "StagedAt": "2026-11-11T22:03:04.6848425\u002B00:00"
+    },
+    "/Eagle/yixiaozi.library/images/MWDPFOK2JUHAL.info/metadata.json": {
+      "MetadataPath": "/Eagle/yixiaozi.library/images/MWDPFOK2JUHAL.info/metadata.json",
+      "ImageId": "MWDPFOK2JUHAL",
+      "SourcePath": "/Eagle/yixiaozi.library/images/MWDPFOK2JUHAL.info/Clipboard - 2026-11-12 23.30.27.png",
+      "StagingPath": "/Share/iCloud-Inbox/Clipboard - 2026-11-12 23.30.27.png",
+      "StagedAt": "2026-11-12T22:01:57.0453345\u002B00:00"
     }
   },
   "KnownImageIds": [
@@ -7459,7 +7466,8 @@
     "MWC7C4LQ56OC2",
     "MWC7C4LQSNFFA",
     "MWC7C4LRTWMEZ",
-    "MWC7C4LRWU3ZC"
+    "MWC7C4LRWU3ZC",
+    "MWDPFOK2JUHAL"
   ],
   "PendingStageInfoDirs": []
 }
